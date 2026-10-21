@@ -1,0 +1,9 @@
+.venv/
+node_modules/
+site/dist/
+type/out/
+__pycache__/
+.DS_Store
+site/*.tsbuildinfo
+.vercel/
+.claude/
