@@ -18,7 +18,17 @@ export type FamilyKey =
   | "orbit"
   | "cleft"
   | "beacon"
-  | "brioche";
+  | "brioche"
+  | "diode"
+  | "aurelia"
+  | "marquee"
+  | "anvil"
+  | "gravure"
+  | "frontier"
+  | "quill"
+  | "rewind"
+  | "spire"
+  | "vector";
 
 export interface Family {
   key: FamilyKey;
@@ -232,6 +242,106 @@ export const FAMILIES: Family[] = [
     accent: "#B45309",
     accentDark: "#F2B66D",
   },
+  {
+    key: "diode",
+    name: "Diode",
+    kind: "Dot matrix",
+    blurb: "Every letter sampled onto a grid: LED dots at Thin, crisp pixels at Regular, solid blocks at Black.",
+    sample: "Status: all systems go.",
+    headline: "Now boarding gate 12",
+    accent: "#0891B2",
+    accentDark: "#22D3EE",
+  },
+  {
+    key: "aurelia",
+    name: "Aurelia",
+    kind: "Flared sans",
+    blurb: "Stems that swell gently at their ends, carved-stone elegance without a single serif.",
+    sample: "Quietly carved in stone.",
+    headline: "An evening at the gallery",
+    accent: "#9D174D",
+    accentDark: "#F9A8D4",
+  },
+  {
+    key: "marquee",
+    name: "Marquee",
+    kind: "Art Deco",
+    blurb: "High crossbars, perfect circles and a tiny x-height straight from a 1920s theatre sign.",
+    sample: "Tonight only, at eight.",
+    headline: "The grand opening gala",
+    accent: "#B45309",
+    accentDark: "#FCD34D",
+  },
+  {
+    key: "anvil",
+    name: "Anvil",
+    kind: "Geometric slab",
+    blurb: "Circles and heavy square slabs, sturdy as a workshop sign and friendly at any size.",
+    sample: "Built to take a beating.",
+    headline: "Tools for serious makers",
+    accent: "#44403C",
+    accentDark: "#D6D3D1",
+  },
+  {
+    key: "gravure",
+    name: "Gravure",
+    kind: "Engraver's gothic",
+    blurb: "Wide, calm letters with hairline spurs, like a calling card or a banknote.",
+    sample: "Est. by appointment only.",
+    headline: "Private client services",
+    accent: "#166534",
+    accentDark: "#86EFAC",
+  },
+  {
+    key: "frontier",
+    name: "Frontier",
+    kind: "Condensed Clarendon",
+    blurb: "Tall bracketed slabs with ball ends, a poster face from the frontier made modern.",
+    sample: "Wanted: one good headline.",
+    headline: "The last stagecoach west",
+    accent: "#991B1B",
+    accentDark: "#FCA5A5",
+  },
+  {
+    key: "quill",
+    name: "Quill",
+    kind: "Semi-serif",
+    blurb: "A humanist sans with pen-like entry serifs on top only, warm without slowing the eye.",
+    sample: "Half serif, all character.",
+    headline: "Notes from the writing desk",
+    accent: "#4338CA",
+    accentDark: "#A5B4FC",
+  },
+  {
+    key: "rewind",
+    name: "Rewind",
+    kind: "Backslant",
+    blurb: "A rounded sans leaning backwards, pure eighties energy for music, games and merch.",
+    sample: "Press play, then rewind.",
+    headline: "Mixtape volume two",
+    accent: "#DB2777",
+    accentDark: "#F472B6",
+  },
+  {
+    key: "spire",
+    name: "Spire",
+    kind: "Compressed",
+    blurb: "Ultra narrow and tall for posters, sports scores and headlines that must fit.",
+    sample: "Taller than the skyline.",
+    headline: "Final score 104 to 98",
+    accent: "#1D4ED8",
+    accentDark: "#93C5FD",
+  },
+  {
+    key: "vector",
+    name: "Vector",
+    kind: "Angular square",
+    blurb: "Squared, condensed and cut at forty-five degrees for tech, gaming and hardware.",
+    sample: "Calibrated for speed.",
+    headline: "System online, 120 fps",
+    accent: "#0F766E",
+    accentDark: "#5EEAD4",
+  },
 ];
 
 export const GLYPH_COUNT = 285;
@@ -270,14 +380,14 @@ export const EXTENDED =
   "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿĀāĂăĄąĆćČčĎďĐđĒēĖėĘęĚěĞğĪīİıĽľŁłŃńŇňŌōŐőŒœŔŕŘřŚśŞşŠšŤťŪūŮůŰűŸŹźŻżŽž¡¿«»‹›“”‘’„‚…·•°±×÷€£¥¢©®™§←→↑↓";
 
 export const isMono = (f: Family) => /monospace/i.test(f.kind);
-export const isSerif = (f: Family) => !isMono(f) && /serif|didone/i.test(f.kind) && !/sans/i.test(f.kind);
+export const isSerif = (f: Family) => !isMono(f) && /serif|didone|slab|clarendon/i.test(f.kind) && !/sans/i.test(f.kind);
 
 export function fallback(f: Family): string {
   if (isMono(f)) return "ui-monospace, monospace";
   return isSerif(f) ? "ui-serif, Georgia, serif" : "system-ui, sans-serif";
 }
 
-const COUNT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five"];
+const COUNT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine", "thirty"];
 export const COUNT = FAMILIES.length;
 export const COUNT_WORD = COUNT_WORDS[COUNT] ?? String(COUNT);
 

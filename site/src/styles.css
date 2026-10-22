@@ -119,6 +119,66 @@
   font-weight: 100 900;
   font-display: swap;
 }
+@font-face {
+  font-family: "Diode";
+  src: url("/fonts/diode.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Aurelia";
+  src: url("/fonts/aurelia.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Marquee";
+  src: url("/fonts/marquee.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Anvil";
+  src: url("/fonts/anvil.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gravure";
+  src: url("/fonts/gravure.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Frontier";
+  src: url("/fonts/frontier.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Quill";
+  src: url("/fonts/quill.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Rewind";
+  src: url("/fonts/rewind.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spire";
+  src: url("/fonts/spire.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vector";
+  src: url("/fonts/vector.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
 
 :root {
   --bg: #f3f2ee;
@@ -151,6 +211,16 @@
   --accent-cleft: #7c2d12;
   --accent-beacon: #15803d;
   --accent-brioche: #b45309;
+  --accent-diode: #0891b2;
+  --accent-aurelia: #9d174d;
+  --accent-marquee: #b45309;
+  --accent-anvil: #44403c;
+  --accent-gravure: #166534;
+  --accent-frontier: #991b1b;
+  --accent-quill: #4338ca;
+  --accent-rewind: #db2777;
+  --accent-spire: #1d4ed8;
+  --accent-vector: #0f766e;
   --ease: cubic-bezier(0.22, 0.8, 0.18, 1);
   --pad: clamp(16px, 2.8vw, 44px);
   --head-h: 64px;
@@ -189,6 +259,16 @@
   --accent-cleft: #e8a27c;
   --accent-beacon: #4ade80;
   --accent-brioche: #f2b66d;
+  --accent-diode: #22d3ee;
+  --accent-aurelia: #f9a8d4;
+  --accent-marquee: #fcd34d;
+  --accent-anvil: #d6d3d1;
+  --accent-gravure: #86efac;
+  --accent-frontier: #fca5a5;
+  --accent-quill: #a5b4fc;
+  --accent-rewind: #f472b6;
+  --accent-spire: #93c5fd;
+  --accent-vector: #5eead4;
   color-scheme: dark;
 }
 
@@ -224,6 +304,16 @@
   --accent-cleft: #e8a27c;
   --accent-beacon: #4ade80;
   --accent-brioche: #f2b66d;
+  --accent-diode: #22d3ee;
+  --accent-aurelia: #f9a8d4;
+  --accent-marquee: #fcd34d;
+  --accent-anvil: #d6d3d1;
+  --accent-gravure: #86efac;
+  --accent-frontier: #fca5a5;
+  --accent-quill: #a5b4fc;
+  --accent-rewind: #f472b6;
+  --accent-spire: #93c5fd;
+  --accent-vector: #5eead4;
     color-scheme: dark;
   }
 }
@@ -642,6 +732,35 @@ a {
   letter-spacing: -0.03em;
   white-space: nowrap;
   transition: opacity 160ms linear;
+}
+
+@media (max-width: 1280px) {
+  .bands {
+    grid-template-rows: repeat(var(--rows2, 10), minmax(0, 1fr));
+  }
+}
+
+/* three columns: tighter rows, no arrow, smaller meta */
+.bands.dense .band {
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 0 clamp(14px, 1.6vw, 24px);
+}
+
+.bands.dense .band-arrow {
+  display: none;
+}
+
+.bands.dense .band-kind {
+  font-size: 12px;
+}
+
+.bands.dense .band-index {
+  font-size: 11px;
+}
+
+.bands.dense .band-name-text {
+  font-size: min(64cqh, 13cqw, var(--fit, 9999px));
 }
 
 .bands:hover .band:not(:hover) .band-name-text {

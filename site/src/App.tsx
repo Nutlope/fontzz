@@ -8,7 +8,7 @@ export type Mode = "type" | "text" | "interface" | "glyphs";
 export type Theme = "light" | "dark";
 
 // index columns on wide screens; rows are derived so any family count fills the page
-const COLS = FAMILIES.length > 10 ? 2 : 1;
+const COLS = Math.ceil(FAMILIES.length / 10);
 
 const initialWeights = Object.fromEntries(FAMILIES.map((f) => [f.key, 400])) as Record<FamilyKey, number>;
 
@@ -150,8 +150,13 @@ export default function App() {
         />
       ) : (
         <main
-          className="bands"
-          style={{ "--rows": Math.ceil(FAMILIES.length / COLS) } as React.CSSProperties}
+          className={"bands" + (COLS > 2 ? " dense" : "")}
+          style={
+            {
+              "--rows": Math.ceil(FAMILIES.length / COLS),
+              "--rows2": Math.ceil(FAMILIES.length / Math.min(COLS, 2)),
+            } as React.CSSProperties
+          }
           onPointerLeave={() => setHovered(null)}
         >
           {FAMILIES.map((f, i) => (

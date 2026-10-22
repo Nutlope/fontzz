@@ -4,11 +4,11 @@
 
 <h1 align="center">fontzz</h1>
 
-<p align="center">Twenty original type families drawn entirely in code (sans, serif, Didone, two monospaced), every weight from 100 to 900, with a one-page site to try them and hand them to your agent. <a href="https://fontzz.vercel.app">fontzz.vercel.app</a></p>
+<p align="center">Thirty original type families drawn entirely in code (sans, serif, Didone, Art Deco, dot matrix, two monospaced), every weight from 100 to 900, with a one-page site to try them and hand them to your agent. <a href="https://fontzz.vercel.app">fontzz.vercel.app</a></p>
 
 ## Tech stack
 
-- Python generator in `type/`: every glyph is parametric, three masters (Thin, Regular, Black) per family, no font editor involved; serifs, ball terminals, slant and fixed-width spacing are all parameters
+- Python generator in `type/`: every glyph is parametric, three masters (Thin, Regular, Black) per family, no font editor involved; serifs, flares, ball terminals, slant, fixed-width spacing and dot-matrix sampling are all parameters
 - fontmake builds the variable font, fontTools and skia-pathops cut the nine static weights, kerning comes from glyph side profiles
 - Each family: 285 characters (Latin-1, Latin Extended-A subset, figures, currency, arrows), WOFF2 at 15 to 35 KB
 - Every TTF and WOFF2 passes OTS, the sanitizer Chrome and Firefox run on web fonts
@@ -24,7 +24,7 @@
 
 ## Roadmap
 
-- [ ] grow the collection to 25 families
+- [ ] add stencil and inline display families
 - [ ] hint the statics so small sizes on Windows look as crisp as the variable font
 - [ ] add italics, starting with Halden and Folio
 - [ ] add code ligatures and a slashed zero to Signal and Tally

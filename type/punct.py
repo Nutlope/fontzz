@@ -650,12 +650,15 @@ def g_percent(F):
     g = new("percent")
     S, T = F.SU * 0.8, F.TU * 0.8
     r = F.cap * 0.2
-    W = uc.cw(F, 1.2)
+    W = max(uc.cw(F, 1.2), F.cap * 0.62)
     h = F.cap
-    for (cx, cy) in ((r, h - r), (W - r, r)):
-        g.add(oval(cx, cy, r, r + F.oc * 0.5, F.kU))
-        g.hole(oval(cx, cy, r - S, r + F.oc * 0.5 - T, F.kiU))
-    t = S * 1.0
+    rx = min(r, W * 0.27)   # narrow families get upright ovals instead of overlapping rings
+    # keep the counters open at heavy weights (and in narrow families)
+    S, T = min(S, rx * (0.5 if rx < r else 0.6)), min(T, r * (0.5 if rx < r else 0.6))
+    for (cx, cy) in ((rx, h - r), (W - rx, r)):
+        g.add(oval(cx, cy, rx, r + F.oc * 0.5, F.kU))
+        g.hole(oval(cx, cy, rx - S, r + F.oc * 0.5 - T, F.kiU))
+    t = min(S, W * 0.16) if rx < r else S
     if is_round(F):
         g.add(stroke(F, (W * 0.24, t / 2), (W * 0.76, h - t / 2), t, True, True))
     else:

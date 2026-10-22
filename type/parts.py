@@ -76,7 +76,7 @@ def bracket(cx, cy, dx, dy, br, k=0.56):
 
 def stem_serifs(F, x0, x1, y, flag, top):
     """Serif shapes for a vertical stem end at height y (top=True for the upper end)."""
-    if not has_serifs(F) or flag not in SERIF_FLAGS:
+    if not has_serifs(F) or flag not in SERIF_FLAGS or (not top and F.get("sf_top_only")):
         return []
     ts, e = F.sf_t, F.sf_e
     br = min(F.get("sf_br", 0), e * 0.92)
@@ -135,7 +135,8 @@ def vstem(F, x0, x1, y0, y1, cap0=False, cap1=False):
         if not (cap0 or cap1):
             return [rect(x0, y0, x1, y1)] + extra
     if not is_round(F):
-        return [rect(x0, y0, x1, y1)] + extra if extra else rect(x0, y0, x1, y1)
+        body = flared(x0, y0, x1, y1, F.flare, bool(cap0), bool(cap1)) if F.get("flare") else rect(x0, y0, x1, y1)
+        return [body] + extra if extra else body
     r = (x1 - x0) / 2
     k = 0.5523
     cx = (x0 + x1) / 2
@@ -185,6 +186,25 @@ def bracket_v(cx, cy, dx, dy, br, k=0.56):
     return p
 
 
+def flared(x0, y0, x1, y1, f, end0=True, end1=True):
+    """Glyphic stem: straight, widening into a soft flare at each free end
+    (Optima style). Joined ends stay square so bowls and arches meet cleanly."""
+    h = y1 - y0
+    w = x1 - x0
+    L = min(h * 0.32, w * 2.6)
+    d0 = w * f if end0 else 0.0
+    d1 = w * f if end1 else 0.0
+    p = Path((x0 - d0, y0)).L((x1 + d0, y0))
+    p.C((x1 + d0 * 0.45, y0 + L * 0.22), (x1, y0 + L * 0.5), (x1, y0 + L))
+    p.L((x1, y1 - L))
+    p.C((x1, y1 - L * 0.5), (x1 + d1 * 0.45, y1 - L * 0.22), (x1 + d1, y1))
+    p.L((x0 - d1, y1))
+    p.C((x0 - d1 * 0.45, y1 - L * 0.22), (x0, y1 - L * 0.5), (x0, y1 - L))
+    p.L((x0, y0 + L))
+    p.C((x0, y0 + L * 0.5), (x0 - d0 * 0.45, y0 + L * 0.22), (x0 - d0, y0))
+    return p
+
+
 def hstem(F, x0, x1, y0, y1, cap0=False, cap1=False):
     """Horizontal bar from x0 (left) to x1 (right). Flags "U"/"D"/"B" add beak
     serifs (up, down, both) at that end in serif families."""
@@ -215,7 +235,7 @@ def hstem(F, x0, x1, y0, y1, cap0=False, cap1=False):
 def hslab(F, xl, xr, y, up):
     """Horizontal serif for a diagonal stroke end spanning xl..xr at height y.
     up=True puts the serif above y (bottom ends), False below (top ends)."""
-    if not has_serifs(F):
+    if not has_serifs(F) or (up and F.get("sf_top_only")):
         return []
     ts, e = F.sf_t, F.sf_e * F.get("sf_de", 0.9)
     y0, y1 = (y, y + ts) if up else (y - ts, y)

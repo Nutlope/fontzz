@@ -116,6 +116,10 @@ def monospace(f, g, mw, gs=None):
 
 def make_glyphs(spec, mi, names=None):
     f = F(spec, mi)
+    if spec.get("pixel_src"):
+        import pixel
+        gs = pixel.make(spec, f)
+        return f, (gs if names is None else {k: v for k, v in gs.items() if k in names})
     out = {}
     want = names
     names = [n for n in ORDER] if names is None else [n for n in ORDER if n in names or True]
@@ -242,7 +246,7 @@ def build_family(key, statics=True):
     for mi, (sname, w) in enumerate(MASTERS):
         ufo, f, gs = build_master(spec, mi)
         masters.append((ufo, f, gs))
-    if not spec.get("mono"):
+    if not spec.get("mono") and not spec.get("pixel_src"):
         import kern
         kern.apply(spec, masters)
     try:
