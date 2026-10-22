@@ -204,7 +204,24 @@ def release(key):
     print("released", name, os.path.getsize(wv) // 1024, "KB woff2")
 
 
+def bundle():
+    """fontzz-all.zip: every released family package in one download."""
+    zp = os.path.join(SITE, "downloads", "fontzz-all.zip")
+    with zipfile.ZipFile(zp, "w", zipfile.ZIP_DEFLATED) as z:
+        for key, spec in FAMILIES.items():
+            name = spec["name"]
+            pkg = os.path.join(build.OUT, key, "pkg", name)
+            if not os.path.isdir(pkg):
+                raise SystemExit("missing package for %s, release it first" % name)
+            for root, _, files in os.walk(pkg):
+                for fn in files:
+                    full = os.path.join(root, fn)
+                    z.write(full, os.path.join("fontzz", name, os.path.relpath(full, pkg)))
+    print("bundled", len(FAMILIES), "families,", os.path.getsize(zp) // 1024, "KB")
+
+
 if __name__ == "__main__":
     keys = sys.argv[1:] or list(FAMILIES)
     for k in keys:
         release(k)
+    bundle()

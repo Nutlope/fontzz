@@ -2,7 +2,7 @@
 import math
 from core import (dot, Glyph, Path, rect, oval, quad_cubics, H, V, D, lerp, T_rot180, add, sub,
                   mul, norm, split, line_param, tension_handles, cap_round)
-from parts import (vstem, hstem, stroke, dot_shape, cut_line, arc_stroke, ring, shoulder, bowl,
+from parts import (ball, ring_pt, has_serifs, vstem, hstem, stroke, dot_shape, cut_line, arc_stroke, ring, shoulder, bowl,
                    is_round, junction)
 from glyphs import glyph, sb, new
 
@@ -150,6 +150,9 @@ def g_r(F):
     W = S + F.n_c * F.r_w
     g.add(vstem(F, 0, S, 0, xh, "B", "L"))
     g.add(arm(F, 0, S, W))
+    if F.get("ball"):
+        tip = (W - F.T * 0.6, xh + F.o - F.r_drop - F.T * 0.3)
+        g.add(ball(F, tip, (tip[0] - 1, tip[1] - 1.4), edge=F.T * 0.4))
     g.lsb = sb(F, "S")
     g.rsb = sb(F, "N") * F.get("r_rsb", 1.0)
     return g
@@ -184,7 +187,7 @@ def c_like(F, W, th_top, th_bot, xh=None):
     rxm, rym = (rxo + rxi) / 2, (ryo + ryi) / 2
     p0, d0 = cut_line(F, cx, cy, rxm, rym, th_top, inner=(rxi, ryi))
     p1, d1 = cut_line(F, cx, cy, rxm, rym, th_bot, inner=(rxi, ryi))
-    return arc_stroke(F, outer, inner, (0, p0, d0), (3, p1, d1))
+    return [arc_stroke(F, outer, inner, (0, p0, d0), (3, p1, d1))] + ball(F, ring_pt(cx, cy, rxi, rym, th_top), (cx, cy))
 
 
 @glyph("c", 0x63)
@@ -328,6 +331,7 @@ def j_hook(F, x0, ytop):
     p0, d0 = cut_line(F, cx, cy, rxm, rym, F.j_th, F.get('hook_term'), inner=(rxi, ryi))
     g = []
     g.append(arc_stroke(F, outer, inner, (2, p0, d0), (3, 1.0, None), cap1=False))
+    g.extend(ball(F, ring_pt(cx, cy, rxi, rym, F.j_th), (cx, cy)))
     g.append(vstem(F, x0, x0 + S, cy, ytop, False, "L"))
     return g
 
@@ -371,6 +375,7 @@ def a_double(F, W=None):
     outer, inner, rxm, rym, rxi, ryi = hook_ring(F, cx, cy, rxo, ryo, S, T * F.get("a_tT", 1.0))
     p0, d0 = cut_line(F, cx, cy, rxm, rym, F.a_th, inner=(rxi, ryi))
     parts.append(arc_stroke(F, outer, inner, (0, 0.0, None), (1, p0, d0), cap0=False))
+    parts.extend(ball(F, ring_pt(cx, cy, rxi, rym, F.a_th), (cx, cy)))
     parts.append(vstem(F, W - S, W, 0, cy, "R", False))
     # bowl, built with the stem on the left then mirrored
     bt = xh * F.a_bt
@@ -452,6 +457,7 @@ def g_f(F):
     outer, inner, rxm, rym, rxi, ryi = hook_ring(F, cx, cy, rxo, ryo, S, T * F.get("f_hT", 1.0))
     p0, d0 = cut_line(F, cx, cy, rxm, rym, F.f_th, F.get('hook_term'), inner=(rxi, ryi))
     g.add(arc_stroke(F, outer, inner, (0, p0, d0), (1, 1.0, None), cap1=False))
+    g.add(ball(F, ring_pt(cx, cy, rxi, rym, F.f_th), (cx, cy)))
     g.add(vstem(F, x0, x0 + S, 0, cy, "B", False))
     TB = F.get("TB", T)
     g.add(hstem(F, x0 - F.f_cl, x0 + S + F.f_cr, xh - TB, xh, True, True))
@@ -496,7 +502,7 @@ def g_k(F):
     S, xh = F.S, F.xh
     t = diag_t(F)
     gap = S * F.get("k_gap", (0.9, 0.62, 0.5))[F.mi] if not isinstance(F.get("k_gap"), (int, float)) else S * F.k_gap
-    if F.get("serif"):
+    if has_serifs(F):
         gap = max(gap, 2 * F.sf_e * F.get("sf_de", 0.9) + S * 0.35)
     W = S + F.n_c * F.k_w
     yj = xh * F.k_j
@@ -611,7 +617,7 @@ def g_y(F):
         g.add(dquad((xm, 0), (wl / 2, xh), wl))
         from parts import hslab
         g.add(hslab(F, 0, wl, xh, False), hslab(F, xr_top - wxr / 2, xr_top + wxr / 2, xh, False),
-              hslab(F, xb - wxr / 2, xb + wxr / 2, desc, True) if F.get("serif") == "slab" else None)
+              hslab(F, xb - wxr / 2, xb + wxr / 2, desc, True) if F.get("serif") == "slab" and has_serifs(F) else None)
     g.lsb = g.rsb = sb(F, "D")
     return g
 

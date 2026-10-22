@@ -8,7 +8,17 @@ export type FamilyKey =
   | "plaza"
   | "vesper"
   | "ledger"
-  | "folio";
+  | "folio"
+  | "opaline"
+  | "signal"
+  | "tally"
+  | "topsy"
+  | "tempo"
+  | "pebble"
+  | "orbit"
+  | "cleft"
+  | "beacon"
+  | "brioche";
 
 export interface Family {
   key: FamilyKey;
@@ -122,6 +132,106 @@ export const FAMILIES: Family[] = [
     accent: "#9A3412",
     accentDark: "#F59E6B",
   },
+  {
+    key: "opaline",
+    name: "Opaline",
+    kind: "Didone",
+    blurb: "Hairline serifs, ball terminals and fierce contrast for mastheads, fashion and luxury.",
+    sample: "Elegance is refusal.",
+    headline: "The autumn collection",
+    accent: "#1E3A8A",
+    accentDark: "#93B4FF",
+  },
+  {
+    key: "signal",
+    name: "Signal",
+    kind: "Monospace",
+    blurb: "A clean sans monospace for code, terminals and tables, with slab i, l and r that never blur.",
+    sample: "const ship = () => fast;",
+    headline: "npm run build && deploy",
+    accent: "#0284C7",
+    accentDark: "#5CC8FF",
+  },
+  {
+    key: "tally",
+    name: "Tally",
+    kind: "Slab monospace",
+    blurb: "Typewriter warmth with modern spacing, for code comments, notes, receipts and logs.",
+    sample: "Every line, accounted for.",
+    headline: "Invoice 0042, paid in full",
+    accent: "#52525B",
+    accentDark: "#D4D4D8",
+  },
+  {
+    key: "topsy",
+    name: "Topsy",
+    kind: "Reverse contrast",
+    blurb: "Thick horizontals and thin verticals: contrast turned upside down for posters and play.",
+    sample: "Turn it upside down.",
+    headline: "Weekend jam session",
+    accent: "#C026D3",
+    accentDark: "#E879F9",
+  },
+  {
+    key: "tempo",
+    name: "Tempo",
+    kind: "Slanted grotesque",
+    blurb: "A forward-leaning sans with pen-cut ends that adds speed to sport, motion and launches.",
+    sample: "Faster than yesterday.",
+    headline: "Race day starts now",
+    accent: "#DC2626",
+    accentDark: "#FF6B6B",
+  },
+  {
+    key: "pebble",
+    name: "Pebble",
+    kind: "Soft square",
+    blurb: "Rounded squares, round ends and a single-story a, friendly for apps, games and dashboards.",
+    sample: "Smooth, round, ready.",
+    headline: "Level up your mornings",
+    accent: "#CA8A04",
+    accentDark: "#FACC15",
+  },
+  {
+    key: "orbit",
+    name: "Orbit",
+    kind: "Extended square",
+    blurb: "Wide squared forms with a technical, aerospace feel for brands, specs and big numbers.",
+    sample: "Launch window open.",
+    headline: "T minus 10 seconds",
+    accent: "#475569",
+    accentDark: "#CBD5E1",
+  },
+  {
+    key: "cleft",
+    name: "Cleft",
+    kind: "Wedge serif",
+    blurb: "Triangular wedge serifs with a carved, confident voice for headlines, labels and packaging.",
+    sample: "Carved with care.",
+    headline: "Small batch, built to last",
+    accent: "#7C2D12",
+    accentDark: "#E8A27C",
+  },
+  {
+    key: "beacon",
+    name: "Beacon",
+    kind: "Legible sans",
+    blurb: "Generous spacing, a tailed l and a serifed I so nothing gets confused. Made for reading.",
+    sample: "Ill, 1ll and lIl stay clear.",
+    headline: "Built for every reader",
+    accent: "#15803D",
+    accentDark: "#4ADE80",
+  },
+  {
+    key: "brioche",
+    name: "Brioche",
+    kind: "Soft serif",
+    blurb: "Pillowy rounded serifs and soft ends for cafes, children's books and warm brands.",
+    sample: "Fresh out of the oven.",
+    headline: "Good mornings, baked daily",
+    accent: "#B45309",
+    accentDark: "#F2B66D",
+  },
 ];
 
 export const GLYPH_COUNT = 285;
@@ -159,23 +269,27 @@ export const BASIC =
 export const EXTENDED =
   "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿĀāĂăĄąĆćČčĎďĐđĒēĖėĘęĚěĞğĪīİıĽľŁłŃńŇňŌōŐőŒœŔŕŘřŚśŞşŠšŤťŪūŮůŰűŸŹźŻżŽž¡¿«»‹›“”‘’„‚…·•°±×÷€£¥¢©®™§←→↑↓";
 
-export const isSerif = (f: Family) => /serif/i.test(f.kind) && !/sans/i.test(f.kind);
+export const isMono = (f: Family) => /monospace/i.test(f.kind);
+export const isSerif = (f: Family) => !isMono(f) && /serif|didone/i.test(f.kind) && !/sans/i.test(f.kind);
 
 export function fallback(f: Family): string {
+  if (isMono(f)) return "ui-monospace, monospace";
   return isSerif(f) ? "ui-serif, Georgia, serif" : "system-ui, sans-serif";
 }
 
-const origin = () => (typeof window === "undefined" ? "" : window.location.origin);
+const COUNT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five"];
+export const COUNT = FAMILIES.length;
+export const COUNT_WORD = COUNT_WORDS[COUNT] ?? String(COUNT);
 
-/** A self-contained prompt an AI coding agent can follow to install one family. */
+export const zipName = (f: Family) => `${f.name}.zip`;
+export const ALL_ZIP = "fontzz-all.zip";
+
+/** Prompt for one family. The button downloads the zip, so the agent works from a local file. */
 export function agentPrompt(f: Family): string {
-  const o = origin();
-  return `Install the ${f.name} typeface in this project and make it the main font.
+  return `I just downloaded the ${f.name} typeface from fontzz. It's ${zipName(f)} in my Downloads folder (if it isn't there, ask me where it is). Install it in this project and make it the main font.
 
-${f.name} is a ${f.kind.toLowerCase()} variable font with every weight from 100 to 900, free under the SIL Open Font License 1.1.
-
-1. Download ${o}/fonts/${f.key}.woff2 and save it as "${f.name}[wght].woff2" in the folder this project serves static assets from (for example public/fonts).
-2. Register it, pointing the url at the saved file:
+1. Unzip it and copy ${f.name}/web/${f.name}[wght].woff2 into the folder this project serves static files from (for example public/fonts).
+2. Register it, pointing the url at the copied file:
 
 @font-face {
   font-family: "${f.name}";
@@ -184,25 +298,26 @@ ${f.name} is a ${f.kind.toLowerCase()} variable font with every weight from 100 
   font-display: swap;
 }
 
-3. Use it everywhere: font-family: "${f.name}", ${fallback(f)}. If the project uses Tailwind or a theme file, set it as the default ${isSerif(f) ? "serif" : "sans"} font there instead.
+3. Use it everywhere: font-family: "${f.name}", ${fallback(f)}. If the project uses Tailwind or a theme file, set it as the default ${isMono(f) ? "mono" : isSerif(f) ? "serif" : "sans"} font there instead.
 4. Preload the file in the document head so text never flashes.
 
-The full family (variable and static TTF files) is at ${o}/downloads/${f.name}.zip`;
+${f.name} is a ${f.kind.toLowerCase()} variable font with every weight from 100 to 900, free under the SIL Open Font License 1.1.`;
 }
 
-/** A prompt that lets the agent choose the family that fits the project. */
+/** Prompt for the whole collection: the agent asks which family to use. */
 export function agentPromptAll(): string {
-  const o = origin();
-  const list = FAMILIES.map((f) => `- ${f.name} (${f.kind.toLowerCase()}): ${f.blurb} File: ${o}/fonts/${f.key}.woff2`).join("\n");
-  return `Pick the fontzz typeface that best fits this project, then install it as the main font. If the choice is unclear, ask me first.
+  const list = FAMILIES.map((f) => `- ${f.name} (${f.kind.toLowerCase()}): ${f.blurb}`).join("\n");
+  return `I just downloaded ${ALL_ZIP} from fontzz: ${COUNT_WORD} type families in my Downloads folder (if it isn't there, ask me where it is).
 
-All families are variable fonts with every weight from 100 to 900, free under the SIL Open Font License 1.1.
+First, look at this project and ask me which family I want, suggesting the two or three that fit it best:
 
 ${list}
 
-To install the chosen family (called NAME below):
-1. Download its file and save it as "NAME[wght].woff2" in the folder this project serves static assets from (for example public/fonts).
+Then install the one I pick (called NAME below):
+1. Unzip it and copy fontzz/NAME/web/NAME[wght].woff2 into the folder this project serves static files from (for example public/fonts).
 2. Register it with @font-face: font-family "NAME", src url("/fonts/NAME[wght].woff2") format("woff2"), font-weight 100 900, font-display swap.
-3. Use it everywhere with a system fallback (system-ui, sans-serif, or ui-serif, Georgia, serif for Ledger and Folio). If the project uses Tailwind or a theme file, set it there instead.
-4. Preload the file in the document head.`;
+3. Use it everywhere with a fallback: system-ui, sans-serif for sans families, ui-serif, Georgia, serif for serif families, ui-monospace, monospace for Signal and Tally. If the project uses Tailwind or a theme file, set it there instead.
+4. Preload the file in the document head.
+
+Every family is a variable font with weights from 100 to 900, free under the SIL Open Font License 1.1.`;
 }

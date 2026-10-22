@@ -4,13 +4,13 @@
 
 <h1 align="center">fontzz</h1>
 
-<p align="center">Ten original type families drawn entirely in code, every weight from 100 to 900, with a one-page site to try them and hand them to your agent. <a href="https://fontzz.vercel.app">fontzz.vercel.app</a></p>
+<p align="center">Twenty original type families drawn entirely in code (sans, serif, Didone, two monospaced), every weight from 100 to 900, with a one-page site to try them and hand them to your agent. <a href="https://fontzz.vercel.app">fontzz.vercel.app</a></p>
 
 ## Tech stack
 
-- Python generator in `type/`: every glyph is parametric, three masters (Thin, Regular, Black) per family, no font editor involved
+- Python generator in `type/`: every glyph is parametric, three masters (Thin, Regular, Black) per family, no font editor involved; serifs, ball terminals, slant and fixed-width spacing are all parameters
 - fontmake builds the variable font, fontTools and skia-pathops cut the nine static weights, kerning comes from glyph side profiles
-- Each family: 285 characters (Latin-1, Latin Extended-A subset, figures, currency, arrows), WOFF2 at 25 to 35 KB
+- Each family: 285 characters (Latin-1, Latin Extended-A subset, figures, currency, arrows), WOFF2 at 15 to 35 KB
 - Every TTF and WOFF2 passes OTS, the sanitizer Chrome and Firefox run on web fonts
 - `site/`: Vite 5, React 18, TypeScript, plain CSS, no UI library, about 57 KB of gzipped JS
 
@@ -24,10 +24,10 @@
 
 ## Roadmap
 
-- [ ] add a monospace family for code, drawn on the same skeleton
+- [ ] grow the collection to 25 families
 - [ ] hint the statics so small sizes on Windows look as crisp as the variable font
 - [ ] add italics, starting with Halden and Folio
-- [ ] serve an `llms.txt` so agents can find the fonts without the copy button
+- [ ] add code ligatures and a slashed zero to Signal and Tally
 - Cyrillic and Greek are skipped for now: I'd rather finish Latin properly than ship three half-done scripts.
 
 ## License

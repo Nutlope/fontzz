@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Family, agentPromptAll } from "./data";
+import { ALL_ZIP, COUNT_WORD, Family, agentPromptAll } from "./data";
 import { Theme } from "./App";
 import AgentButton from "./AgentButton";
 
+const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
+
 const KEYS: [string, string][] = [
-  ["1 to 0", "Open a family"],
   ["↑ ↓", "Switch family"],
   ["← →", "Change weight"],
   ["Esc", "Back"],
@@ -79,7 +80,7 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
         <span className="wordmark-dot" style={{ background: "var(--accent-" + family.key + ")" }} />
       </button>
       {home ? (
-        <p className="tagline">Ten original type families. Every weight from 100 to 900. Free under the Open Font License.</p>
+        <p className="tagline">{cap(COUNT_WORD)} original type families. Every weight from 100 to 900. Free under the Open Font License.</p>
       ) : (
         <span />
       )}
@@ -91,7 +92,7 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
           <input
             value={preview}
             onChange={(e) => onPreview(e.target.value)}
-            placeholder={home ? "Type to preview all ten" : "Type to preview"}
+            placeholder={home ? `Type to preview all ${COUNT_WORD}` : "Type to preview"}
             maxLength={48}
             spellCheck={false}
             aria-label="Preview your own text"
@@ -118,13 +119,13 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
         </button>
         {home && (
           <div className="get">
-            <AgentButton className="get-agent" prompt={agentPromptAll} notify={notify} />
+            <AgentButton className="get-agent" prompt={agentPromptAll} file={ALL_ZIP} notify={notify} />
             <a
               className="get-dl"
-              href="/downloads/fontzz-all.zip"
+              href={`/downloads/${ALL_ZIP}`}
               download
-              aria-label="Download all ten families"
-              title="Download all ten families (2 MB zip)"
+              aria-label={`Download all ${COUNT_WORD} families`}
+              title={`Download all ${COUNT_WORD} families (4 MB zip)`}
             >
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
                 <path d="M8 2.5v7.5M4.75 7 8 10.25 11.25 7M3 13h10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

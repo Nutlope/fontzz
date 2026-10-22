@@ -2,7 +2,7 @@
 import math
 from core import (Glyph, Path, rect, oval, quad_cubics, H, V, D, lerp, T_rot180, add, sub, mul,
                   norm, split, line_param, tension_handles, cap_round, intersect, reverse_cubic)
-from parts import (vstem, hstem, stroke, dot_shape, cut_line, arc_stroke, ring, shoulder, bowl,
+from parts import (ball, ring_pt, vstem, hstem, stroke, dot_shape, cut_line, arc_stroke, ring, shoulder, bowl,
                    is_round, junction, vee, dquad, slant_w, hook_ring, hslab)
 from glyphs import glyph, sb, new
 import lc
@@ -151,7 +151,7 @@ def C_arc(F, W, th_top, th_bot):
     rxm, rym = (rxo + rxi) / 2, (ryo + ryi) / 2
     p0, d0 = cut_line(F, cx, cy, rxm, rym, th_top, inner=(rxi, ryi))
     p1, d1 = cut_line(F, cx, cy, rxm, rym, th_bot, inner=(rxi, ryi))
-    return arc_stroke(F, outer, inner, (0, p0, d0), (3, p1, d1)), (cx, cy, rxo, ryo, rxi, ryi, outer,
+    return [arc_stroke(F, outer, inner, (0, p0, d0), (3, p1, d1))] + ball(F, ring_pt(cx, cy, rxi, rym, th_top), (cx, cy)), (cx, cy, rxo, ryo, rxi, ryi, outer,
                                                                      inner, rxm, rym)
 
 

@@ -295,7 +295,8 @@ LEDGER = fam(
     term="vertical", hook_term="vertical", dot="square", one_base=True,
     n_c=(300, 282, 222), o_w=(1.04, 1.04, 1.02), sb=(34, 30, 22), sbU=(40, 34, 24),
     H_c=(420, 400, 330), E_w=0.88, F_w=0.84, L_w=0.82, T_w=0.94,
-    c_th=(40, 40, 44), c_thb=(-40, -40, -44), e_th=(-36, -38, -42),
+    c_th=(34, 32, 26), c_thb=(-34, -32, -26), e_th=(-32, -32, -30),
+    C_th=(34, 32, 26), C_thb=(-34, -32, -26), G_th=(34, 32, 28),
     dotw=(44, 96, 180),
 )
 
@@ -322,5 +323,176 @@ FOLIO = fam(
     dotw=(42, 94, 182), i_dot_y=(600, 580, 566),
 )
 
+# ---------------------------------------------------------------- second set
+
+OPALINE = fam(
+    name="Opaline",
+    style_note="Didone",
+    xh=450, cap=690, asc=760, desc=-240, o=12, oc=14,
+    S=(20, 92, 200), T=(11, 20, 46), SU=(22, 98, 210), TU=(11, 22, 48),
+    k=0.56, ki=(0.6, 0.64, 0.72), kU=0.56, kiU=(0.6, 0.64, 0.72),
+    sh_k=0.58, sh_ki=(0.6, 0.64, 0.7),
+    serif="bracket", sf_br=(0, 0, 0), sf_t=(10, 16, 28), sf_e=(46, 62, 70), sf_vt=(12, 20, 34), sf_vh=(40, 56, 58),
+    sf_de=0.95, sf_midbeak=False,
+    x_w=(1.06, 1.12, 1.5), v_w=(1.06, 1.08, 1.16),
+    term="vertical", hook_term="vertical", arm_cut=90,
+    dot="round", ball=0.6, one_base=True, diag_c=0.26, N_s=0.4, M_s=0.46, dg=0.96, dgU=0.96,
+    n_c=(280, 262, 204), o_w=(1.02, 1.02, 1.0), sb=(32, 28, 20), sbU=(38, 32, 22),
+    H_c=(400, 380, 316), E_w=0.86, F_w=0.82, L_w=0.8,
+    c_th=(54, 52, 50), c_thb=(-48, -46, -40), e_th=(-40, -36, -30),
+    s_tth=(52, 52, 54), s_bth=(-130, -130, -128), C_th=(52, 50, 48), C_thb=(-46, -44, -38),
+    G_th=(44, 40, 34), S_tth=(52, 52, 54), S_bth=(-130, -130, -128),
+    a_th=(132, 130, 128), j_th=(214, 216, 218), g_th=(200, 200, 204), f_th=(56, 58, 60),
+    t_th=(-54, -54, -58), two_th=(144, 146, 150), three_tth=(144, 146, 150),
+    three_bth=(-144, -144, -140), five_bth=(-144, -144, -140), six_th=(56, 54, 60),
+    dotw=(40, 100, 196), i_dot_y=(580, 560, 546), t_top=(600, 590, 580),
+)
+
+SIGNAL = fam(
+    name="Signal",
+    style_note="Monospace",
+    mono=600, mono_sb=40,
+    xh=540, cap=700, asc=750, desc=-210, o=9, oc=10,
+    S=(20, 80, 146), T=(18, 72, 130), SU=(20, 82, 150), TU=(18, 74, 134),
+    k=0.66, ki=(0.68, 0.7, 0.76), kU=0.66, kiU=(0.68, 0.7, 0.76),
+    sh_k=0.66, sh_ki=(0.68, 0.7, 0.76), jk=(0.6, 0.6, 0.62),
+    serif="slab", serif_only=("i", "dotlessi", "j", "dotlessj", "l", "I", "r", "one"),
+    sf_t=(18, 66, 118), sf_e=(150, 142, 118), sf_de=0.9, sf_vt=(18, 60, 100), sf_vh=(40, 40, 30),
+    one_base=True, hook_term="vertical", dot="square",
+    n_c=(400, 290, 214), m_c=(0.5, 0.44, 0.34), o_w=(1.0, 1.0, 1.0), sb=(40, 40, 40), sbU=(40, 40, 40),
+    H_c=(400, 300, 226), r_w=(0.9, 0.9, 1.1),
+    f_cl=(120, 124, 118), f_cr=(150, 150, 140), t_cl=(120, 124, 118), t_cr=(150, 150, 140),
+    c_th=(34, 34, 38), c_thb=(-34, -34, -38), e_th=(-32, -34, -40),
+    dotw=(42, 100, 170), i_dot_y=(650, 626, 600), circ_r=0.4,
+)
+
+TALLY = fam(
+    name="Tally",
+    style_note="Slab monospace",
+    mono=600, mono_sb=24,
+    xh=500, cap=680, asc=740, desc=-220, o=10, oc=12,
+    S=(20, 74, 136), T=(18, 66, 120), SU=(22, 78, 142), TU=(20, 70, 126),
+    k=0.58, ki=(0.6, 0.62, 0.68), kU=0.58, kiU=(0.6, 0.62, 0.68),
+    serif="slab", sf_t=(18, 52, 80), sf_e=(76, 66, 40), sf_de=0.8, sf_vt=(18, 54, 90), sf_vh=(40, 46, 30),
+    sf_midbeak=False, x_w=(1.0, 1.04, 1.2), v_w=(1.0, 1.02, 1.1), K_lj=(0.42, 0.44, 0.5),
+    term="flat", hook_term="vertical", dot="round", one_base=True,
+    n_c=(330, 268, 210), m_c=(0.48, 0.42, 0.3), o_w=(1.02, 1.02, 1.0), sb=(24, 24, 24), sbU=(24, 24, 24),
+    H_c=(330, 270, 204), E_w=0.9, F_w=0.86, L_w=0.86, T_w=0.94, r_w=(0.86, 0.86, 1.04),
+    f_cl=(104, 110, 106), f_cr=(130, 130, 124), t_cl=(104, 110, 106), t_cr=(130, 130, 124),
+    c_th=(44, 44, 48), c_thb=(-44, -44, -48), e_th=(-40, -42, -46),
+    dotw=(44, 96, 160), circ_r=0.4,
+)
+
+TOPSY = fam(
+    name="Topsy",
+    style_note="Reverse contrast",
+    xh=560, cap=720, asc=760, desc=-200, o=12, oc=14,
+    S=(14, 40, 84), T=(22, 96, 196), SU=(16, 44, 90), TU=(24, 102, 206),
+    k=0.6, ki=(0.6, 0.6, 0.62), kU=0.6, kiU=(0.6, 0.6, 0.62),
+    sh_k=0.6, sh_ki=(0.6, 0.6, 0.62),
+    hook_term="vertical", dot="round", diag_c=1.6,
+    n_c=(330, 320, 290), o_w=(1.08, 1.08, 1.08), sb=(54, 46, 36), sbU=(64, 56, 44),
+    H_c=(420, 410, 380), m_c=0.9,
+    c_th=(60, 64, 80), c_thb=(-60, -64, -80), e_th=(-60, -64, -80), e_bar=(0.9, 0.9, 0.86),
+    s_tth=(60, 64, 80), s_bth=(-120, -120, -110), C_th=(60, 64, 80), C_thb=(-60, -64, -80),
+    G_th=(60, 64, 80), S_tth=(60, 64, 80), S_bth=(-120, -120, -110),
+    dotw=(40, 90, 190), i_dot_y=(660, 650, 640), t_top=(700, 690, 680), q_ry=(0.3, 0.36, 0.44),
+)
+
+TEMPO = fam(
+    name="Tempo",
+    style_note="Slanted grotesque",
+    slant=11,
+    xh=540, cap=710, asc=750, desc=-210,
+    S=(20, 84, 188), T=(18, 72, 150), SU=(22, 88, 198), TU=(20, 76, 160),
+    term="angled", term_pen=70, term_mix=(0.3, 0.25, 0.1), hook_term="angled", arm_cut=70,
+    t_top_style="slant", t_slant=0.9, dot="round",
+    n_c=(262, 244, 186), o_w=(1.0, 1.0, 0.98), sb=(48, 42, 30), sbU=(60, 54, 40),
+    H_c=(360, 342, 276), E_w=0.82, F_w=0.78, L_w=0.74,
+)
+
+PEBBLE = fam(
+    name="Pebble",
+    style_note="Soft square",
+    xh=550, cap=710, asc=750, desc=-200, o=8, oc=9,
+    S=(22, 88, 172), T=(21, 82, 156), SU=(23, 92, 182), TU=(22, 86, 166),
+    k=0.78, ki=(0.8, 0.82, 0.86), kU=0.78, kiU=(0.8, 0.82, 0.86),
+    sh_k=0.78, sh_ki=(0.8, 0.82, 0.86), r_k=0.74, r_ki=0.76, jk=(0.64, 0.64, 0.64),
+    a_bt=(0.56, 0.57, 0.56), a_hy=(0.6, 0.61, 0.64),
+    term="round", dot="round", G_spur=False, a_story=1,
+    n_c=(320, 300, 236), o_w=(1.04, 1.04, 1.02), sb=(56, 50, 38), sbU=(70, 62, 46),
+    H_c=(400, 380, 310),
+    c_th=(34, 36, 40), c_thb=(-34, -36, -40), e_th=(-32, -34, -38),
+    dotw=(44, 100, 196), i_dot_y=(660, 640, 620), t_top=(680, 672, 664),
+)
+
+ORBIT = fam(
+    name="Orbit",
+    style_note="Extended square",
+    xh=540, cap=700, asc=740, desc=-190, o=6, oc=7,
+    S=(22, 88, 190), T=(20, 80, 166), SU=(24, 92, 198), TU=(22, 84, 172),
+    k=0.88, ki=(0.9, 0.92, 0.93), kU=0.88, kiU=(0.9, 0.92, 0.93),
+    sh_k=0.88, sh_ki=(0.9, 0.92, 0.93), r_k=0.84, r_ki=0.86, jk=(0.68, 0.68, 0.68),
+    a_bt=(0.56, 0.58, 0.6), a_hy=(0.6, 0.6, 0.62),
+    hook_term="vertical", dot="square", G_spur=False,
+    n_c=(440, 414, 336), o_w=(1.06, 1.06, 1.04), sb=(66, 60, 46), sbU=(80, 74, 56),
+    H_c=(580, 550, 460), r_w=(0.5, 0.5, 0.62), m_c=0.78,
+    c_th=(26, 26, 30), c_thb=(-26, -26, -30), e_th=(-24, -26, -32),
+    f_rx=(150, 160, 250), f_cl=(110, 120, 140), f_cr=(130, 140, 160),
+    t_rx=(130, 140, 240), t_cl=(100, 110, 130), t_cr=(120, 130, 150),
+    j_rx=(176, 194, 270), fig_w=(0.96, 0.96, 0.98), k_w=(0.84, 0.84, 0.92),
+    v_w=(0.86, 0.86, 0.92), w_w=(0.66, 0.66, 0.72), x_w=(0.84, 0.84, 0.9), z_w=(0.8, 0.8, 0.86),
+    S_tth=(32, 32, 36), S_bth=(-148, -148, -144), s_tth=(32, 32, 36), s_bth=(-148, -148, -144),
+    dotw=(44, 100, 190), i_dot_y=(640, 620, 600),
+)
+
+CLEFT = fam(
+    name="Cleft",
+    style_note="Wedge serif",
+    xh=500, cap=700, asc=750, desc=-220, o=10, oc=12,
+    S=(22, 86, 184), T=(18, 66, 140), SU=(24, 90, 192), TU=(20, 70, 146),
+    k=0.6, ki=(0.6, 0.62, 0.68), kU=0.6, kiU=(0.6, 0.62, 0.68),
+    serif="wedge", sf_t=(8, 14, 22), sf_e=(52, 74, 84), sf_wh=1.5, sf_vt=(18, 52, 92), sf_vh=(36, 46, 30),
+    sf_de=0.85, sf_midbeak=False, x_w=(1.08, 1.12, 1.4), v_w=(1.08, 1.1, 1.2), K_lj=(0.42, 0.44, 0.5),
+    term="flat", hook_term="vertical", dot="square", one_base=True,
+    n_c=(296, 278, 218), o_w=(1.04, 1.04, 1.02), sb=(36, 30, 22), sbU=(42, 36, 26),
+    H_c=(410, 392, 324), E_w=0.88, F_w=0.84, L_w=0.82, T_w=0.94,
+    c_th=(40, 40, 44), c_thb=(-40, -40, -44), e_th=(-36, -38, -42),
+    dotw=(44, 96, 180),
+)
+
+BEACON = fam(
+    name="Beacon",
+    style_note="Legible sans",
+    xh=560, cap=720, asc=760, desc=-210, o=10, oc=12,
+    S=(20, 82, 180), T=(18, 74, 156), SU=(22, 86, 188), TU=(20, 78, 164),
+    k=0.57, ki=(0.58, 0.6, 0.66), kU=0.57, kiU=(0.58, 0.6, 0.66),
+    serif="slab", serif_only=("I",), sf_t=(18, 60, 110), sf_e=(80, 86, 80), sf_vt=(18, 60, 100), sf_vh=(30, 30, 30),
+    hook_term="vertical", dot="round", l_tail=True, l_rx=(96, 106, 224), l_ry=(96, 106, 204), l_th=(-56, -56, -60),
+    a_story=1, one_base=True,
+    n_c=(318, 298, 236), o_w=(1.04, 1.04, 1.02), sb=(84, 78, 60), sbU=(96, 88, 68),
+    c_th=(26, 28, 34), c_thb=(-26, -28, -34), e_th=(-26, -28, -34),
+    s_tth=(34, 34, 38), s_bth=(-146, -146, -142),
+    dotw=(44, 100, 190), i_dot_y=(666, 646, 626), t_top=(690, 680, 670),
+)
+
+BRIOCHE = fam(
+    name="Brioche",
+    style_note="Soft serif",
+    xh=520, cap=700, asc=750, desc=-220, o=11, oc=13,
+    S=(24, 92, 204), T=(20, 64, 132), SU=(26, 96, 212), TU=(22, 68, 140),
+    k=0.58, ki=(0.6, 0.62, 0.68), kU=0.58, kiU=(0.6, 0.62, 0.68),
+    serif="soft", sf_t=(22, 56, 86), sf_e=(44, 62, 74), sf_br=(30, 40, 40), sf_round=1.0,
+    sf_vt=(22, 56, 92), sf_vh=(34, 40, 30), sf_de=0.9, sf_midbeak=False,
+    x_w=(1.08, 1.12, 1.44), v_w=(1.08, 1.1, 1.2), K_lj=(0.42, 0.44, 0.5),
+    term="round", dot="round", one_base=True,
+    n_c=(300, 280, 222), o_w=(1.05, 1.05, 1.03), sb=(36, 30, 22), sbU=(42, 36, 26),
+    H_c=(410, 392, 324), E_w=0.88, F_w=0.84, L_w=0.82, T_w=0.94,
+    c_th=(44, 44, 48), c_thb=(-44, -44, -48), e_th=(-40, -42, -46),
+    dotw=(46, 104, 196),
+)
+
 FAMILIES = {"halden": HALDEN, "rondel": RONDEL, "tessera": TESSERA, "alder": ALDER, "mallow": MALLOW,
-            "strata": STRATA, "plaza": PLAZA, "vesper": VESPER, "ledger": LEDGER, "folio": FOLIO}
+            "strata": STRATA, "plaza": PLAZA, "vesper": VESPER, "ledger": LEDGER, "folio": FOLIO,
+            "opaline": OPALINE, "signal": SIGNAL, "tally": TALLY, "topsy": TOPSY, "tempo": TEMPO,
+            "pebble": PEBBLE, "orbit": ORBIT, "cleft": CLEFT, "beacon": BEACON, "brioche": BRIOCHE}

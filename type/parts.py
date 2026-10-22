@@ -18,7 +18,49 @@ BEAK_FLAGS = ("U", "D", "B")
 
 
 def has_serifs(F):
-    return bool(F.get("serif"))
+    """Serifs for the glyph being drawn. serif_only limits them to some glyphs
+    (monospace i, l, r and friends in an otherwise sans family)."""
+    if not F.get("serif"):
+        return False
+    only = F.get("serif_only")
+    return not only or F.__dict__.get("cur") in only
+
+
+def ring_pt(cx, cy, rx, ry, th):
+    a = math.radians(th)
+    return (cx + rx * math.cos(a), cy + ry * math.sin(a))
+
+
+def ball(F, p, toward, edge=None):
+    """Didone ball terminal at the stroke end p, pulled toward the inside of the
+    curve (point `toward`) so its outer edge stays near the outline."""
+    if not F.get("ball"):
+        return []
+    r = F.S * F.ball / 2
+    edge = F.T / 2 if edge is None else edge
+    v = (toward[0] - p[0], toward[1] - p[1])
+    n = math.hypot(*v) or 1.0
+    c = (p[0] + v[0] / n * (r - edge), p[1] + v[1] / n * (r - edge))
+    return [oval(c[0], c[1], r, r, 0.5523)]
+
+
+def rrect(x0, y0, x1, y1, rl, rr, k=0.5523):
+    """Rectangle whose left and/or right ends are rounded with radius rl / rr."""
+    p = Path((x0 + rl, y0)).L((x1 - rr, y0))
+    if rr:
+        p.C((x1 - rr + rr * k, y0), (x1, y0 + rr - rr * k), (x1, y0 + rr))
+        p.L((x1, y1 - rr))
+        p.C((x1, y1 - rr + rr * k), (x1 - rr + rr * k, y1), (x1 - rr, y1))
+    else:
+        p.L((x1, y1))
+    p.L((x0 + rl, y1))
+    if rl:
+        p.C((x0 + rl - rl * k, y1), (x0, y1 - rl + rl * k), (x0, y1 - rl))
+        p.L((x0, y0 + rl))
+        p.C((x0, y0 + rl - rl * k), (x0 + rl - rl * k, y0), (x0 + rl, y0))
+    else:
+        p.L((x0, y0))
+    return p
 
 
 def bracket(cx, cy, dx, dy, br, k=0.56):
@@ -52,7 +94,22 @@ def stem_serifs(F, x0, x1, y, flag, top):
         return out
     xl = x0 - e if left else x0
     xr = x1 + e if right else x1
-    out.append(rect(xl, min(y, yi), xr, max(y, yi)))
+    style = F.get("serif")
+    if style == "wedge":
+        # thin foot plus straight triangles running up the stem (Latin style)
+        h = e * F.get("sf_wh", 1.0)
+        out.append(rect(xl, min(y, yi), xr, max(y, yi)))
+        if left:
+            out.append(Path((x0 - e, yi)).L((x0 + 1, yi)).L((x0 + 1, yi + sg * h)))
+        if right:
+            out.append(Path((x1 + e, yi)).L((x1 - 1, yi)).L((x1 - 1, yi + sg * h)))
+        return out
+    if style == "soft":
+        r = ts / 2 * F.get("sf_round", 1.0)
+        br = min(br, max(0.0, e - r))   # keep the fillet clear of the rounded tip
+        out.append(rrect(xl, min(y, yi), xr, max(y, yi), r if left else 0, r if right else 0))
+    else:
+        out.append(rect(xl, min(y, yi), xr, max(y, yi)))
     if br > 0:
         if left:
             out.append(bracket(x0, yi, -1, sg, br))
@@ -71,6 +128,12 @@ def vstem(F, x0, x1, y0, y1, cap0=False, cap1=False):
     if x0 > x1:
         x0, x1 = x1, x0
     extra = stem_serifs(F, x0, x1, y0, cap0, False) + stem_serifs(F, x0, x1, y1, cap1, True)
+    if extra and is_round(F):
+        # a serif closes the end, so the stem itself stays flat there
+        cap0 = cap0 and cap0 not in SERIF_FLAGS
+        cap1 = cap1 and cap1 not in SERIF_FLAGS
+        if not (cap0 or cap1):
+            return [rect(x0, y0, x1, y1)] + extra
     if not is_round(F):
         return [rect(x0, y0, x1, y1)] + extra if extra else rect(x0, y0, x1, y1)
     r = (x1 - x0) / 2
@@ -156,6 +219,9 @@ def hslab(F, xl, xr, y, up):
         return []
     ts, e = F.sf_t, F.sf_e * F.get("sf_de", 0.9)
     y0, y1 = (y, y + ts) if up else (y - ts, y)
+    if F.get("serif") == "soft":
+        r = ts / 2 * F.get("sf_round", 1.0)
+        return [rrect(xl - e, y0, xr + e, y1, r, r)]
     return [rect(xl - e, y0, xr + e, y1)]
 
 

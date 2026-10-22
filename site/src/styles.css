@@ -59,6 +59,66 @@
   font-weight: 100 900;
   font-display: swap;
 }
+@font-face {
+  font-family: "Opaline";
+  src: url("/fonts/opaline.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Signal";
+  src: url("/fonts/signal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tally";
+  src: url("/fonts/tally.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Topsy";
+  src: url("/fonts/topsy.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tempo";
+  src: url("/fonts/tempo.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pebble";
+  src: url("/fonts/pebble.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Orbit";
+  src: url("/fonts/orbit.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cleft";
+  src: url("/fonts/cleft.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Beacon";
+  src: url("/fonts/beacon.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Brioche";
+  src: url("/fonts/brioche.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
 
 :root {
   --bg: #f3f2ee;
@@ -81,6 +141,16 @@
   --accent-vesper: #8e3b8a;
   --accent-ledger: #4d7c0f;
   --accent-folio: #9a3412;
+  --accent-opaline: #1e3a8a;
+  --accent-signal: #0284c7;
+  --accent-tally: #52525b;
+  --accent-topsy: #c026d3;
+  --accent-tempo: #dc2626;
+  --accent-pebble: #ca8a04;
+  --accent-orbit: #475569;
+  --accent-cleft: #7c2d12;
+  --accent-beacon: #15803d;
+  --accent-brioche: #b45309;
   --ease: cubic-bezier(0.22, 0.8, 0.18, 1);
   --pad: clamp(16px, 2.8vw, 44px);
   --head-h: 64px;
@@ -109,6 +179,16 @@
   --accent-vesper: #d884d4;
   --accent-ledger: #9bd43b;
   --accent-folio: #f59e6b;
+  --accent-opaline: #93b4ff;
+  --accent-signal: #5cc8ff;
+  --accent-tally: #d4d4d8;
+  --accent-topsy: #e879f9;
+  --accent-tempo: #ff6b6b;
+  --accent-pebble: #facc15;
+  --accent-orbit: #cbd5e1;
+  --accent-cleft: #e8a27c;
+  --accent-beacon: #4ade80;
+  --accent-brioche: #f2b66d;
   color-scheme: dark;
 }
 
@@ -134,6 +214,16 @@
   --accent-vesper: #d884d4;
   --accent-ledger: #9bd43b;
   --accent-folio: #f59e6b;
+  --accent-opaline: #93b4ff;
+  --accent-signal: #5cc8ff;
+  --accent-tally: #d4d4d8;
+  --accent-topsy: #e879f9;
+  --accent-tempo: #ff6b6b;
+  --accent-pebble: #facc15;
+  --accent-orbit: #cbd5e1;
+  --accent-cleft: #e8a27c;
+  --accent-beacon: #4ade80;
+  --accent-brioche: #f2b66d;
     color-scheme: dark;
   }
 }
@@ -495,8 +585,11 @@ a {
 .bands {
   flex: 1;
   min-height: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(var(--rows, 10), minmax(0, 1fr));
+  grid-auto-columns: minmax(0, 1fr);
+  margin-right: -1px;
   animation: fade 180ms var(--ease) both;
 }
 
@@ -511,15 +604,12 @@ a {
   gap: 16px;
   padding: 0 var(--pad);
   border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
   cursor: pointer;
   user-select: none;
   touch-action: pan-y;
   overflow: hidden;
   transition: background-color 120ms linear;
-}
-
-.band:last-child {
-  border-bottom: 0;
 }
 
 .band:hover {
@@ -700,11 +790,10 @@ a {
   scrollbar-width: none;
 }
 
-@media (max-width: 1100px) {
-  .strip-list {
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent);
-    mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent);
-  }
+.strip-list {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 32px), transparent);
+  mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 32px), transparent);
+  scroll-padding-inline: 48px;
 }
 
 .strip-list::-webkit-scrollbar {
@@ -1552,10 +1641,13 @@ a {
   }
   .bands {
     flex: none;
+    grid-auto-flow: row;
+    grid-template-rows: none;
+    grid-auto-rows: max(76px, calc((100dvh - var(--head-h)) / 10));
+    margin-right: 0;
   }
   .band {
-    flex: none;
-    height: max(76px, calc((100dvh - var(--head-h)) / 10));
+    border-right: 0;
   }
   .detail {
     flex: none;
@@ -1630,6 +1722,12 @@ a {
 @media (max-width: 640px) {
   .header {
     gap: 12px;
+  }
+  .get-agent .swap {
+    display: none;
+  }
+  .get-agent {
+    padding: 0 12px 0 14px;
   }
   .tester {
     display: none;

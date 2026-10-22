@@ -53,6 +53,67 @@ def draw(path, pen):
     pen.closePath()
 
 
+def ink_bounds(g, gs, dx=0.0, dy=0.0, sc=1.0):
+    """Bounds of a glyph including its components (component offsets resolved)."""
+    bs = []
+    b = g.bounds()
+    if b is not None:
+        bs.append((b[0] * sc + dx, b[1] * sc + dy, b[2] * sc + dx, b[3] * sc + dy))
+    for c in g.comps:
+        cs = c[3] if len(c) > 3 else 1.0
+        cb = ink_bounds(gs[c[0]], gs, dx + c[1] * sc, dy + c[2] * sc, sc * cs)
+        if cb is not None:
+            bs.append(cb)
+    if not bs:
+        return None
+    return (min(b[0] for b in bs), min(b[1] for b in bs), max(b[2] for b in bs), max(b[3] for b in bs))
+
+
+# composites made of two full letters; flattened in every master so they stay compatible
+MONO_FLATTEN = {"ae", "oe", "dcaron", "tcaron", "lcaron", "Lcaron"}
+
+
+def flatten(g, gs, dx=0.0, dy=0.0, sc=1.0, into=None):
+    """Replace components with copies of their outlines."""
+    into = g if into is None else into
+    for c in g.comps:
+        cs = c[3] if len(c) > 3 else 1.0
+        src = gs[c[0]]
+        ox, oy, s2 = dx + c[1] * sc, dy + c[2] * sc, sc * cs
+        for p, h in src.paths:
+            into.paths.append((p.map(lambda q, ox=ox, oy=oy, s2=s2: (q[0] * s2 + ox, q[1] * s2 + oy)), h))
+        flatten(src, gs, ox, oy, s2, into)
+    if into is g:
+        g.comps = []
+
+
+def monospace(f, g, mw, gs=None):
+    """Fixed advance: center the ink in one cell, squeezing
+    anything wider than the cell allows."""
+    if not g.width:
+        return  # combining marks stay zero width
+    b = ink_bounds(g, gs or {})
+    W = mw
+    room = W - 2 * f.get("mono_sb", 34)
+    if g.comps and g.name in MONO_FLATTEN:
+        flatten(g, gs)  # two letters in one cell: draw it out so it can be squeezed
+        b = g.bounds()
+    if b is None:
+        g.width = W
+        return
+    ink = b[2] - b[0]
+    if ink > room and not g.comps:
+        s = room / ink
+        x0 = b[0]
+        g.apply(lambda p: (x0 + (p[0] - x0) * s, p[1]))
+        b = g.bounds()
+        ink = b[2] - b[0]
+    dx = (W - ink) / 2 - b[0]
+    g.apply(lambda p: (p[0] + dx, p[1]))
+    g.comps = [(c[0], c[1] + dx) + tuple(c[2:]) for c in g.comps]
+    g.width = W
+
+
 def make_glyphs(spec, mi, names=None):
     f = F(spec, mi)
     out = {}
@@ -60,6 +121,7 @@ def make_glyphs(spec, mi, names=None):
     names = [n for n in ORDER] if names is None else [n for n in ORDER if n in names or True]
     for name in names:
         uni, fn = REG[name]
+        f.__dict__["cur"] = name
         try:
             g = fn(f)
         except Exception as e:
@@ -68,8 +130,18 @@ def make_glyphs(spec, mi, names=None):
         g.uni = uni
         finish(g)
         out[name] = g
+    slant = f.get("slant")
+    if slant:
+        t = __import__("math").tan(__import__("math").radians(slant))
+        for name in names:
+            out[name].apply(lambda p: (p[0] + p[1] * t, p[1]))
+    mono = f.get("mono")
+    if mono:
+        for name in names:
+            monospace(f, out[name], mono)
     for name in CORDER:
         uni, fn = COMP[name]
+        f.__dict__["cur"] = name
         try:
             g = fn(f, out)
         except Exception as e:
@@ -78,6 +150,8 @@ def make_glyphs(spec, mi, names=None):
         g.uni = uni
         if g.lsb is not None:
             finish(g)
+        if mono:
+            monospace(f, g, mono, out)
         out[name] = g
     if want is not None:
         return f, {k: v for k, v in out.items() if k in want}
@@ -118,7 +192,12 @@ def build_master(spec, mi):
     ufo.lib["public.glyphOrder"] = order
     # .notdef
     nd = ufo.newGlyph(".notdef")
-    nd.width = 560
+    nd.width = f.get("mono") or 560
+    if f.get("slant"):
+        info.italicAngle = -f.slant
+    if f.get("mono"):
+        info.postscriptIsFixedPitch = True
+        info.openTypeOS2Panose = [2, 11, 5, 9, 0, 0, 0, 0, 0, 0]
     pen = nd.getPen()
     for (x0, y0, x1, y1, rev) in ((60, 0, 500, 720, False), (110, 50, 450, 670, True)):
         pts = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
@@ -129,7 +208,7 @@ def build_master(spec, mi):
             pen.lineTo(p)
         pen.closePath()
     sp = ufo.newGlyph("space")
-    sp.width = round(f.get("space_w", 0.5 * (2 * f.S + f.n_c) + f.sb * 0.9))
+    sp.width = f.get("mono") or round(f.get("space_w", 0.5 * (2 * f.S + f.n_c) + f.sb * 0.9))
     sp.unicodes = [0x20]
     for name in ORDER + CORDER:
         g = gs[name]
@@ -163,11 +242,9 @@ def build_family(key, statics=True):
     for mi, (sname, w) in enumerate(MASTERS):
         ufo, f, gs = build_master(spec, mi)
         masters.append((ufo, f, gs))
-    try:
+    if not spec.get("mono"):
         import kern
         kern.apply(spec, masters)
-    except ImportError:
-        pass
     try:
         import features
         fea = features.build(spec, masters)

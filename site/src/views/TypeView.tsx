@@ -67,7 +67,14 @@ export default function TypeView({ family, weight, text, onText }: Props) {
     const ro = new ResizeObserver(schedule);
     if (box.current) ro.observe(box.current);
     document.fonts?.ready.then(schedule);
-    return () => ro.disconnect();
+    // belt and braces: some zoom and emulation changes skip the observer
+    window.addEventListener("resize", schedule);
+    document.addEventListener("visibilitychange", schedule);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", schedule);
+      document.removeEventListener("visibilitychange", schedule);
+    };
   }, [schedule]);
 
   const shuffle = () => {

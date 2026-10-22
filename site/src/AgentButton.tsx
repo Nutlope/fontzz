@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 interface Props {
   prompt: () => string;
+  /** zip the prompt refers to; downloaded on the same click */
+  file: string;
   className: string;
   notify: (msg: string) => void;
 }
@@ -23,8 +25,18 @@ async function writeClipboard(text: string) {
   }
 }
 
-/** Copies an install prompt for an AI coding agent, with inline confirmation. */
-export default function AgentButton({ prompt, className, notify }: Props) {
+function download(file: string) {
+  const a = document.createElement("a");
+  a.href = `/downloads/${file}`;
+  a.download = file;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+/** Downloads the fonts and copies a prompt that tells a coding agent how to install them
+ * from that local file, so nothing has to be fetched from this site. */
+export default function AgentButton({ prompt, file, className, notify }: Props) {
   const [done, setDone] = useState(false);
   const timer = useRef<number>();
   useEffect(() => () => window.clearTimeout(timer.current), []);
@@ -32,8 +44,9 @@ export default function AgentButton({ prompt, className, notify }: Props) {
   const copy = async () => {
     try {
       await writeClipboard(prompt());
+      download(file);
       setDone(true);
-      notify("Prompt copied. Paste it into your coding agent.");
+      notify(`Downloading ${file}. Prompt copied, paste it into your agent.`);
       window.clearTimeout(timer.current);
       timer.current = window.setTimeout(() => setDone(false), 1800);
     } catch {
@@ -45,7 +58,7 @@ export default function AgentButton({ prompt, className, notify }: Props) {
     <button
       className={className + (done ? " is-done" : "")}
       onClick={copy}
-      title="Copy a prompt that tells your coding agent how to install this"
+      title="Downloads the fonts and copies a prompt for your coding agent"
     >
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
         {done ? (

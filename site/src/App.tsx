@@ -7,6 +7,9 @@ import Header from "./Header";
 export type Mode = "type" | "text" | "interface" | "glyphs";
 export type Theme = "light" | "dark";
 
+// index columns on wide screens; rows are derived so any family count fills the page
+const COLS = FAMILIES.length > 10 ? 2 : 1;
+
 const initialWeights = Object.fromEntries(FAMILIES.map((f) => [f.key, 400])) as Record<FamilyKey, number>;
 
 function systemTheme(): Theme {
@@ -81,7 +84,7 @@ export default function App() {
   }, []);
   const fit = Math.min(Infinity, ...Object.values(fits));
 
-  // keyboard: 1-9 and 0 open families, arrows step family and weight, Esc goes back
+  // keyboard: arrows step family and weight, Esc goes back
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement;
@@ -91,11 +94,7 @@ export default function App() {
       }
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const idx = active ? FAMILIES.findIndex((f) => f.key === active) : -1;
-      if (/^[0-9]$/.test(e.key)) {
-        const n = e.key === "0" ? 9 : Number(e.key) - 1;
-        open(FAMILIES[n].key);
-        e.preventDefault();
-      } else if (e.key === "Escape" && active) {
+      if (e.key === "Escape" && active) {
         setActive(null);
       } else if (active && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
         const n = (idx + (e.key === "ArrowDown" ? 1 : FAMILIES.length - 1)) % FAMILIES.length;
@@ -114,7 +113,7 @@ export default function App() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, weights, open, setWeight]);
+  }, [active, weights, setWeight]);
 
   const focusFamily: Family = useMemo(
     () => FAMILIES.find((f) => f.key === (active ?? hovered ?? "halden"))!,
@@ -150,7 +149,11 @@ export default function App() {
           notify={notify}
         />
       ) : (
-        <main className="bands" onPointerLeave={() => setHovered(null)}>
+        <main
+          className="bands"
+          style={{ "--rows": Math.ceil(FAMILIES.length / COLS) } as React.CSSProperties}
+          onPointerLeave={() => setHovered(null)}
+        >
           {FAMILIES.map((f, i) => (
             <IndexBand
               key={f.key}

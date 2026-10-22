@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { FAMILIES, Family, FamilyKey, GLYPH_COUNT, agentPrompt } from "./data";
+import { FAMILIES, Family, FamilyKey, GLYPH_COUNT, agentPrompt, zipName } from "./data";
 import AgentButton from "./AgentButton";
 import { Mode, Theme } from "./App";
 import WeightRamp from "./WeightRamp";
@@ -36,7 +36,7 @@ export default function Detail(p: Props) {
   // keep the active family visible in the strip on narrow screens
   useEffect(() => {
     const el = stripRef.current?.querySelector<HTMLElement>(".strip-item.on");
-    el?.scrollIntoView({ block: "nearest", inline: "nearest" });
+    el?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
   }, [f.key]);
 
   return (
@@ -48,8 +48,17 @@ export default function Detail(p: Props) {
           </svg>
           All
         </button>
-        <div className="strip-list" ref={stripRef} role="tablist" aria-label="Choose a family">
-          {FAMILIES.map((g, i) => (
+        <div
+          className="strip-list"
+          ref={stripRef}
+          role="tablist"
+          aria-label="Choose a family"
+          onWheel={(e) => {
+            // vertical wheels scroll the strip sideways
+            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) e.currentTarget.scrollLeft += e.deltaY;
+          }}
+        >
+          {FAMILIES.map((g) => (
             <button
               key={g.key}
               role="tab"
@@ -57,7 +66,7 @@ export default function Detail(p: Props) {
               className={"strip-item" + (g.key === f.key ? " on" : "")}
               style={{ fontFamily: `"${g.name}"`, "--accent": `var(--accent-${g.key})` } as React.CSSProperties}
               onClick={() => p.onSelect(g.key)}
-              title={`${g.name} (${(i + 1) % 10})`}
+              title={g.kind}
             >
               {g.name}
             </button>
@@ -81,7 +90,7 @@ export default function Detail(p: Props) {
           </p>
         </div>
         <div className="actions">
-          <AgentButton className="ghost-btn" prompt={() => agentPrompt(f)} notify={p.notify} />
+          <AgentButton className="ghost-btn" prompt={() => agentPrompt(f)} file={zipName(f)} notify={p.notify} />
           <a className="solid-btn" href={`/downloads/${f.name}.zip`} download>
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
               <path d="M8 2.5v7.5M4.75 7 8 10.25 11.25 7M3 13h10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

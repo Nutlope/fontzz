@@ -678,7 +678,7 @@ def g_sterling(F):
 def circled(name, uni, inner_name, scale):
     def fn(F, gs):
         g = Glyph(name)
-        R = F.cap * 0.52
+        R = F.cap * F.get("circ_r", 0.52)
         t = F.SU * 0.52
         cy = F.cap / 2
         side = sb(F, "O", True)
