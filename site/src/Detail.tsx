@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { FAMILIES, Family, FamilyKey, GLYPH_COUNT, agentPrompt, zipName } from "./data";
+import { Family, FamilyKey, GLYPH_COUNT, agentPrompt, zipName } from "./data";
 import AgentButton from "./AgentButton";
 import { Mode, Theme } from "./App";
 import WeightRamp from "./WeightRamp";
@@ -10,6 +10,7 @@ import GlyphsView from "./views/GlyphsView";
 
 interface Props {
   family: Family;
+  families: Family[];
   weight: number;
   mode: Mode;
   text: string | null;
@@ -58,7 +59,7 @@ export default function Detail(p: Props) {
             if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) e.currentTarget.scrollLeft += e.deltaY;
           }}
         >
-          {FAMILIES.map((g) => (
+          {p.families.map((g) => (
             <button
               key={g.key}
               role="tab"

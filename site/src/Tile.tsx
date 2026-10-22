@@ -15,9 +15,9 @@ interface Props {
 
 const reduceMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-/** One row of the index. Moving across it scrubs the weight live. */
-export default function IndexBand({ family: f, index, weight, preview, fit, intro, onFit, onHover, onOpen }: Props) {
-  const headRef = useRef<HTMLDivElement>(null);
+/** One family on the index wall. Moving across it scrubs the weight live. */
+export default function Tile({ family: f, index, weight, preview, fit, intro, onFit, onHover, onOpen }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLSpanElement>(null);
   const readRef = useRef<HTMLSpanElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
@@ -54,7 +54,7 @@ export default function IndexBand({ family: f, index, weight, preview, fit, intr
     const t = window.setTimeout(() => {
       a.target = weight;
       run();
-    }, 80 + index * 45);
+    }, 80 + index * 18);
     return () => {
       window.clearTimeout(t);
       cancelAnimationFrame(a.raf);
@@ -62,7 +62,16 @@ export default function IndexBand({ family: f, index, weight, preview, fit, intr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // shrink long preview text so every row fits at its widest weight
+  // follow weight changes from the global control unless the pointer is scrubbing
+  useEffect(() => {
+    const a = anim.current;
+    if (a.hovering) return;
+    a.target = weight;
+    run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weight]);
+
+  // report the size that lets this name (or the preview) fit at its widest weight
   useLayoutEffect(() => {
     const el = nameRef.current;
     const box = el?.parentElement;
@@ -86,9 +95,9 @@ export default function IndexBand({ family: f, index, weight, preview, fit, intr
   }, [preview, f.key]);
 
   const onMove = (e: React.PointerEvent) => {
-    if (!headRef.current || e.pointerType === "touch") return;
-    const r = headRef.current.getBoundingClientRect();
-    const pad = Math.min(96, r.width * 0.08);
+    if (!ref.current || e.pointerType === "touch") return;
+    const r = ref.current.getBoundingClientRect();
+    const pad = Math.min(40, r.width * 0.08);
     const x = Math.min(1, Math.max(0, (e.clientX - r.left - pad) / (r.width - pad * 2)));
     const a = anim.current;
     a.hovering = true;
@@ -109,8 +118,9 @@ export default function IndexBand({ family: f, index, weight, preview, fit, intr
 
   return (
     <div
-      ref={headRef}
-      className="band"
+      ref={ref}
+      className="tile"
+      data-i={index}
       style={
         {
           "--fam": `"${f.name}"`,
@@ -124,6 +134,8 @@ export default function IndexBand({ family: f, index, weight, preview, fit, intr
       onPointerEnter={() => onHover(true)}
       onPointerLeave={onLeave}
       onPointerMove={onMove}
+      onFocus={() => onHover(true)}
+      onBlur={() => onHover(false)}
       onClick={open}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -132,24 +144,22 @@ export default function IndexBand({ family: f, index, weight, preview, fit, intr
         }
       }}
     >
-      <span className="band-index">{String(index + 1).padStart(2, "0")}</span>
-      <span className="band-name">
-        <span ref={nameRef} className="band-name-text">
-          {preview || f.name}
-        </span>
-      </span>
-      <span className="band-meta">
-        <span className="band-kind">
-          {preview && <b>{f.name}</b>}
-          {f.kind}
-        </span>
-        <span ref={readRef} className="band-read" aria-hidden="true" />
-      </span>
-      <span className="band-arrow" aria-hidden="true">
-        <svg viewBox="0 0 16 16" width="16" height="16">
+      <span className="tile-index">{String(index + 1).padStart(2, "0")}</span>
+      <span className="tile-arrow" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="14" height="14">
           <path d="M3 8h10m-4-4 4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
+      <span className="tile-name">
+        <span ref={nameRef} className="tile-name-text">
+          {preview || f.name}
+        </span>
+      </span>
+      <span className="tile-kind">
+        {preview && <b>{f.name}</b>}
+        {f.kind}
+      </span>
+      <span ref={readRef} className="tile-read" aria-hidden="true" />
       <div ref={lineRef} className="scrub-line" aria-hidden="true" />
     </div>
   );

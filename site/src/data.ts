@@ -30,7 +30,50 @@ export type FamilyKey =
   | "spire"
   | "vector";
 
+export type Group = "sans" | "serif" | "display" | "mono";
+
+export const GROUPS: [Group, string][] = [
+  ["sans", "Sans"],
+  ["serif", "Serif"],
+  ["display", "Display"],
+  ["mono", "Mono"],
+];
+
+const GROUP_OF: Record<FamilyKey, Group> = {
+  halden: "sans",
+  rondel: "sans",
+  tessera: "sans",
+  alder: "sans",
+  mallow: "sans",
+  strata: "sans",
+  plaza: "sans",
+  beacon: "sans",
+  pebble: "sans",
+  aurelia: "sans",
+  tempo: "sans",
+  ledger: "serif",
+  folio: "serif",
+  opaline: "serif",
+  cleft: "serif",
+  brioche: "serif",
+  anvil: "serif",
+  frontier: "serif",
+  quill: "serif",
+  vesper: "display",
+  topsy: "display",
+  orbit: "display",
+  marquee: "display",
+  gravure: "display",
+  rewind: "display",
+  spire: "display",
+  vector: "display",
+  diode: "display",
+  signal: "mono",
+  tally: "mono",
+};
+
 export interface Family {
+  group: Group;
   key: FamilyKey;
   name: string;
   kind: string;
@@ -41,7 +84,7 @@ export interface Family {
   accentDark: string;
 }
 
-export const FAMILIES: Family[] = [
+const LIST: Omit<Family, "group">[] = [
   {
     key: "halden",
     name: "Halden",
@@ -343,6 +386,11 @@ export const FAMILIES: Family[] = [
     accentDark: "#5EEAD4",
   },
 ];
+
+/** Every family, grouped sans, serif, display, mono (stable within a group). */
+export const FAMILIES: Family[] = LIST.map((f) => ({ ...f, group: GROUP_OF[f.key] })).sort(
+  (a, b) => GROUPS.findIndex(([g]) => g === a.group) - GROUPS.findIndex(([g]) => g === b.group),
+);
 
 export const GLYPH_COUNT = 285;
 

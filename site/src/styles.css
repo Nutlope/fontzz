@@ -473,11 +473,6 @@ a {
   color: var(--ink);
 }
 
-.band-kind b {
-  font-weight: 600;
-  color: var(--ink);
-  margin-right: 6px;
-}
 
 .icon-btn {
   width: 36px;
@@ -672,145 +667,199 @@ a {
 
 /* ------------------------------------------------------------- index */
 
-.bands {
+/* filter bar: categories on the left, one weight for every tile on the right */
+
+.filterbar {
+  flex: none;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 var(--pad);
+  border-bottom: 1px solid var(--line);
+}
+
+.chips {
+  display: flex;
+  gap: 4px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 12px 0 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--ink-2);
+  transition: background-color 120ms linear, color 120ms linear;
+}
+
+.chip:hover {
+  background: var(--bg-2);
+  color: var(--ink);
+}
+
+.chip.on {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.chip-count {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+
+.filter-weight .ramp {
+  height: 40px;
+  width: clamp(220px, 22vw, 330px);
+}
+
+.filter-weight .ramp-cell {
+  font-size: 17px;
+}
+
+.filter-weight .ramp-label {
+  width: 72px;
+  text-align: right;
+}
+
+/* the wall: a grid sized so every family is visible and names stay large */
+
+.wall {
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(var(--rows, 10), minmax(0, 1fr));
-  grid-auto-columns: minmax(0, 1fr);
-  margin-right: -1px;
-  animation: fade 180ms var(--ease) both;
+  grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows, 6), minmax(0, 1fr));
+  margin: 0 -1px -1px 0;
+  animation: fade 160ms var(--ease) both;
 }
 
-.band {
+.tile {
   position: relative;
-  flex: 1 1 0px;
+  min-width: 0;
   min-height: 0;
   container-type: size;
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) auto 28px;
-  align-items: center;
-  gap: 16px;
-  padding: 0 var(--pad);
-  border-bottom: 1px solid var(--line);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "idx . arrow"
+    "name name name"
+    "kind kind read";
+  padding: clamp(10px, 1.1vw, 16px) clamp(12px, 1.4vw, 20px);
   border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   cursor: pointer;
   user-select: none;
   touch-action: pan-y;
   overflow: hidden;
+  outline: none;
   transition: background-color 120ms linear;
 }
 
-.band:hover {
+.tile:hover,
+.tile:focus-visible {
   background: var(--bg-2);
 }
 
-.band-index {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 0.02em;
+.tile:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
 }
 
-.band:hover .band-index {
+.tile-index {
+  grid-area: idx;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.tile:hover .tile-index,
+.tile:focus-visible .tile-index {
   color: var(--accent);
 }
 
-.band-name {
-  min-width: 0;
-  overflow-x: clip;
-  overflow-y: visible;
-  display: block;
-}
-
-.band-name-text {
-  display: block;
-  font-family: var(--fam);
-  font-size: min(66cqh, 12cqw, var(--fit, 9999px));
-  line-height: 1.16;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
-  transition: opacity 160ms linear;
-}
-
-@media (max-width: 1280px) {
-  .bands {
-    grid-template-rows: repeat(var(--rows2, 10), minmax(0, 1fr));
-  }
-}
-
-/* three columns: tighter rows, no arrow, smaller meta */
-.bands.dense .band {
-  grid-template-columns: 22px minmax(0, 1fr) auto;
-  gap: 12px;
-  padding: 0 clamp(14px, 1.6vw, 24px);
-}
-
-.bands.dense .band-arrow {
-  display: none;
-}
-
-.bands.dense .band-kind {
-  font-size: 12px;
-}
-
-.bands.dense .band-index {
-  font-size: 11px;
-}
-
-.bands.dense .band-name-text {
-  font-size: min(64cqh, 13cqw, var(--fit, 9999px));
-}
-
-.bands:hover .band:not(:hover) .band-name-text {
-  opacity: 0.4;
-}
-
-.band-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.band-kind {
-  font-size: 13px;
-  color: var(--ink-2);
-}
-
-.band-kind b {
-  font-weight: 600;
-  color: var(--ink);
-  margin-right: 6px;
-}
-
-.band-read {
-  font-size: 12px;
-  color: var(--muted);
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: opacity 120ms linear;
-}
-
-.band:hover .band-read {
-  height: 16px;
-  opacity: 1;
-}
-
-.band-arrow {
-  justify-self: end;
+.tile-arrow {
+  grid-area: arrow;
   color: var(--ink-2);
   opacity: 0;
   transform: translateX(-4px);
   transition: opacity 120ms linear, transform 160ms var(--ease);
 }
 
-.band:hover .band-arrow {
+.tile:hover .tile-arrow,
+.tile:focus-visible .tile-arrow {
   opacity: 1;
   transform: none;
+}
+
+.tile-name {
+  grid-area: name;
+  align-self: center;
+  min-width: 0;
+  overflow-x: clip;
+  overflow-clip-margin: 10px; /* room for backslanted and overhanging first letters */
+  overflow-y: visible;
+}
+
+.tile-name-text {
+  display: block;
+  font-family: var(--fam);
+  font-size: min(46cqh, 19cqw, var(--fit, 9999px));
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  transition: opacity 160ms linear;
+}
+
+.wall:hover .tile:not(:hover) .tile-name-text {
+  opacity: 0.45;
+}
+
+.tile-kind {
+  grid-area: kind;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile-kind b {
+  font-weight: 600;
+  color: var(--ink);
+  margin-right: 6px;
+}
+
+.tile-read {
+  grid-area: read;
+  padding-left: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 120ms linear;
+}
+
+.tile:hover .tile-read {
+  opacity: 1;
 }
 
 .scrub-line {
@@ -836,7 +885,7 @@ a {
   font-family: "Halden", system-ui, sans-serif;
 }
 
-.band:hover .scrub-line {
+.tile:hover .scrub-line {
   opacity: 0.8;
 }
 
@@ -1758,15 +1807,21 @@ a {
     min-height: 100dvh;
     overflow: visible;
   }
-  .bands {
+  .wall {
     flex: none;
-    grid-auto-flow: row;
+    grid-template-columns: 1fr;
     grid-template-rows: none;
-    grid-auto-rows: max(76px, calc((100dvh - var(--head-h)) / 10));
-    margin-right: 0;
+    grid-auto-rows: 84px;
+    margin: 0;
   }
-  .band {
+  .tile {
     border-right: 0;
+  }
+  .tile-name-text {
+    font-size: min(46cqh, 14cqw, var(--fit, 9999px));
+  }
+  .filter-weight {
+    display: none;
   }
   .detail {
     flex: none;
@@ -1850,16 +1905,6 @@ a {
   }
   .tester {
     display: none;
-  }
-  .band {
-    grid-template-columns: 26px minmax(0, 1fr) auto;
-    gap: 10px;
-  }
-  .band-arrow {
-    display: none;
-  }
-  .band-kind {
-    font-size: 12px;
   }
   .stage-meta {
     display: none;

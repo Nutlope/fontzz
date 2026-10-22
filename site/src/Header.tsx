@@ -6,8 +6,9 @@ import AgentButton from "./AgentButton";
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
 const KEYS: [string, string][] = [
-  ["↑ ↓", "Switch family"],
-  ["← →", "Change weight"],
+  ["/", "Preview your text"],
+  ["Arrows", "Move between families"],
+  ["← →", "Weight, inside a family"],
   ["Esc", "Back"],
 ];
 
