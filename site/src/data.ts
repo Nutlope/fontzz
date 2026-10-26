@@ -432,12 +432,19 @@ export const isSerif = (f: Family) => !isMono(f) && /serif|didone|slab|clarendon
 
 export function fallback(f: Family): string {
   if (isMono(f)) return "ui-monospace, monospace";
-  return isSerif(f) ? "ui-serif, Georgia, serif" : "system-ui, sans-serif";
+  return isSerif(f) ? "ui-serif, serif" : "system-ui, sans-serif";
 }
 
 const COUNT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine", "thirty"];
 export const COUNT = FAMILIES.length;
 export const COUNT_WORD = COUNT_WORDS[COUNT] ?? String(COUNT);
+
+export const REPO = "Luffixos/fontzz";
+export const REPO_URL = `https://github.com/${REPO}`;
+export const AUTHORS: [string, string][] = [
+  ["Hassan", "https://x.com/nutlope"],
+  ["Youssef", "https://x.com/YoussefUIUX"],
+];
 
 export const zipName = (f: Family) => `${f.name}.zip`;
 export const ALL_ZIP = "fontzz-all.zip";
@@ -474,7 +481,7 @@ ${list}
 Then install the one I pick (called NAME below):
 1. Unzip it and copy fontzz/NAME/web/NAME[wght].woff2 into the folder this project serves static files from (for example public/fonts).
 2. Register it with @font-face: font-family "NAME", src url("/fonts/NAME[wght].woff2") format("woff2"), font-weight 100 900, font-display swap.
-3. Use it everywhere with a fallback: system-ui, sans-serif for sans families, ui-serif, Georgia, serif for serif families, ui-monospace, monospace for Signal and Tally. If the project uses Tailwind or a theme file, set it there instead.
+3. Use it everywhere with a fallback: system-ui, sans-serif for sans families, ui-serif, serif for serif families, ui-monospace, monospace for Signal and Tally. If the project uses Tailwind or a theme file, set it there instead.
 4. Preload the file in the document head.
 
 Every family is a variable font with weights from 100 to 900, free under the SIL Open Font License 1.1.`;

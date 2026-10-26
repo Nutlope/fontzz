@@ -10,9 +10,9 @@
 
 - Python generator in `type/`: every glyph is parametric, three masters (Thin, Regular, Black) per family, no font editor involved; serifs, flares, ball terminals, slant, fixed-width spacing and dot-matrix sampling are all parameters
 - fontmake builds the variable font, fontTools and skia-pathops cut the nine static weights, kerning comes from glyph side profiles
-- Each family: 285 characters (Latin-1, Latin Extended-A subset, figures, currency, arrows), WOFF2 at 15 to 35 KB
+- Each family: 285 characters (Latin-1, Latin Extended-A subset, figures, currency, arrows), WOFF2 at 9 to 37 KB
 - Every TTF and WOFF2 passes OTS, the sanitizer Chrome and Firefox run on web fonts
-- `site/`: Vite 5, React 18, TypeScript, plain CSS, no UI library, about 57 KB of gzipped JS
+- `site/`: Vite 5, React 18, TypeScript, plain CSS, no UI library, about 62 KB of gzipped JS
 
 ## Cloning & running
 
@@ -32,4 +32,6 @@
 
 ## License
 
-The fonts are released under the SIL Open Font License 1.1, so they're free for personal and commercial use. Every download includes `OFL.txt`.
+The fonts are released under the SIL Open Font License 1.1, so they're free for personal and commercial use. Every download includes `OFL.txt`, and the full text is in [LICENSE](LICENSE).
+
+Built by [Hassan](https://x.com/nutlope) and [Youssef](https://x.com/YoussefUIUX).

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { ALL_ZIP, COUNT_WORD, Family, agentPromptAll } from "./data";
 import { Theme } from "./App";
 import AgentButton from "./AgentButton";
+import GitHubStars from "./GitHubStars";
+import Credit from "./Credit";
 
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
@@ -12,7 +14,7 @@ const KEYS: [string, string][] = [
   ["Esc", "Back"],
 ];
 
-function Info() {
+function Info({ family }: { family: Family }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -54,6 +56,7 @@ function Info() {
               </div>
             ))}
           </dl>
+          <Credit family={family} className="info-credit" />
         </div>
       )}
     </div>
@@ -106,7 +109,8 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
             </button>
           )}
         </label>
-        <Info />
+        <GitHubStars family={family} />
+        <Info family={family} />
         <button
           className="icon-btn"
           onClick={onTheme}
@@ -126,7 +130,7 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
               href={`/downloads/${ALL_ZIP}`}
               download
               aria-label={`Download all ${COUNT_WORD} families`}
-              title={`Download all ${COUNT_WORD} families (4 MB zip)`}
+              title={`Download all ${COUNT_WORD} families (6 MB zip)`}
             >
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
                 <path d="M8 2.5v7.5M4.75 7 8 10.25 11.25 7M3 13h10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

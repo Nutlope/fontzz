@@ -4,6 +4,7 @@ import Tile from "./Tile";
 import Detail from "./Detail";
 import Header from "./Header";
 import WeightRamp from "./WeightRamp";
+import Credit from "./Credit";
 
 export type Mode = "type" | "text" | "interface" | "glyphs";
 export type Theme = "light" | "dark";
@@ -262,6 +263,7 @@ export default function App() {
                 </button>
               ))}
             </div>
+            <Credit family={focusFamily} className="credit-bar" />
             <div className="filter-weight">
               <WeightRamp family={focusFamily} weight={globalWeight} onWeight={applyGlobal} />
             </div>
@@ -288,6 +290,7 @@ export default function App() {
               />
             ))}
           </main>
+          <Credit family={focusFamily} className="credit-foot" />
         </>
       )}
       <div className={"toast" + (toast ? " show" : "")} role="status" aria-live="polite">

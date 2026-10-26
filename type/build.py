@@ -29,6 +29,8 @@ from glyphs import REG, ORDER, COMP, CORDER, finish
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "out")
+REPO = "https://github.com/Luffixos/fontzz"
+SITE_URL = "https://fontzz.vercel.app"
 WEIGHT_NAMES = {100: "Thin", 200: "ExtraLight", 300: "Light", 400: "Regular", 500: "Medium",
                 600: "SemiBold", 700: "Bold", 800: "ExtraBold", 900: "Black"}
 
@@ -174,8 +176,11 @@ def build_master(spec, mi):
     info.xHeight = spec["xh"]
     info.capHeight = spec["cap"]
     info.versionMajor, info.versionMinor = 1, 0
-    info.copyright = "Copyright 2026 The %s Project Authors" % spec["name"]
-    info.openTypeNameDesigner = "fontzz"
+    info.copyright = "Copyright 2026 The %s Project Authors (%s)" % (spec["name"], REPO)
+    info.openTypeNameDesigner = "Hassan and Youssef"
+    info.openTypeNameManufacturer = "fontzz"
+    info.openTypeNameManufacturerURL = SITE_URL
+    info.openTypeNameDesignerURL = REPO
     info.openTypeNameLicense = ("This Font Software is licensed under the SIL Open Font License, "
                                 "Version 1.1.")
     info.openTypeNameLicenseURL = "https://openfontlicense.org"
@@ -190,6 +195,7 @@ def build_master(spec, mi):
     info.openTypeOS2Selection = [7]  # USE_TYPO_METRICS
     info.openTypeOS2WeightClass = MASTERS[mi][1]
     info.openTypeOS2VendorID = "FNZZ"
+    info.openTypeOS2Type = []  # installable embedding, as the OFL allows
     info.postscriptUnderlinePosition = -110
     info.postscriptUnderlineThickness = round(f.T * 0.8 + 10)
     order = [".notdef", "space"] + [n for n in ORDER] + [n for n in CORDER]

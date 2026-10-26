@@ -15,7 +15,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, "..", "site", "public")
 WEIGHTS = build.WEIGHT_NAMES
 
-OFL = """Copyright 2026 The {name} Project Authors
+OFL = """Copyright 2026 The {name} Project Authors (https://github.com/Luffixos/fontzz)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is available with a FAQ at: https://openfontlicense.org
