@@ -84,7 +84,8 @@ export default function Tile({ family: f, index, weight, preview, fit, intro, on
       const w = el.scrollWidth;
       el.style.fontWeight = prev;
       el.style.removeProperty("--fit");
-      const avail = box.clientWidth;
+      const cs = getComputedStyle(box);
+      const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       onFit(w > avail && s > 0 ? Math.floor((avail * s) / w) : Infinity);
     };
     measure();

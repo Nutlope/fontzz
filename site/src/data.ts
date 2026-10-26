@@ -358,8 +358,8 @@ const LIST: Omit<Family, "group">[] = [
   {
     key: "rewind",
     name: "Rewind",
-    kind: "Backslant",
-    blurb: "A rounded sans leaning backwards, pure eighties energy for music, games and merch.",
+    kind: "Rounded condensed",
+    blurb: "Narrow, round-ended and chunky at heavy weights, pure eighties energy for music, games and merch.",
     sample: "Press play, then rewind.",
     headline: "Mixtape volume two",
     accent: "#DB2777",

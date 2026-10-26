@@ -815,8 +815,12 @@ a {
   grid-area: name;
   align-self: center;
   min-width: 0;
+  /* the clip box reaches 10px into the tile's padding on each side, so overhanging
+     letters (a j's hook, a slanted f) have room; overflow-clip-margin is ignored here */
+  margin-inline: calc(var(--name-bleed) * -1);
+  padding-inline: var(--name-bleed);
+  --name-bleed: 10px;
   overflow-x: clip;
-  overflow-clip-margin: 10px; /* room for backslanted and overhanging first letters */
   overflow-y: visible;
 }
 
