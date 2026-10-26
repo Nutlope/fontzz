@@ -124,7 +124,7 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
         </button>
         {home && (
           <div className="get">
-            <AgentButton className="get-agent" prompt={agentPromptAll} file={ALL_ZIP} notify={notify} />
+            <AgentButton className="get-agent" prompt={agentPromptAll} what="the family that fits your project" notify={notify} />
             <a
               className="get-dl"
               href={`/downloads/${ALL_ZIP}`}

@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 interface Props {
   prompt: () => string;
-  /** zip the prompt refers to; downloaded on the same click */
-  file: string;
+  /** what the agent will install, for the tooltip and the confirmation */
+  what: string;
   className: string;
   notify: (msg: string) => void;
 }
@@ -25,18 +25,9 @@ async function writeClipboard(text: string) {
   }
 }
 
-function download(file: string) {
-  const a = document.createElement("a");
-  a.href = `/downloads/${file}`;
-  a.download = file;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-}
-
-/** Downloads the fonts and copies a prompt that tells a coding agent how to install them
- * from that local file, so nothing has to be fetched from this site. */
-export default function AgentButton({ prompt, file, className, notify }: Props) {
+/** Copies a prompt that tells a coding agent where to fetch the font and how to install it.
+ * Nothing is downloaded here: the agent pulls the file itself. */
+export default function AgentButton({ prompt, what, className, notify }: Props) {
   const [done, setDone] = useState(false);
   const timer = useRef<number>();
   useEffect(() => () => window.clearTimeout(timer.current), []);
@@ -44,9 +35,8 @@ export default function AgentButton({ prompt, file, className, notify }: Props) 
   const copy = async () => {
     try {
       await writeClipboard(prompt());
-      download(file);
       setDone(true);
-      notify(`Downloading ${file}. Prompt copied, paste it into your agent.`);
+      notify("Prompt copied. Paste it into Claude Code, Cursor or any coding agent.");
       window.clearTimeout(timer.current);
       timer.current = window.setTimeout(() => setDone(false), 1800);
     } catch {
@@ -58,7 +48,7 @@ export default function AgentButton({ prompt, file, className, notify }: Props) 
     <button
       className={className + (done ? " is-done" : "")}
       onClick={copy}
-      title="Downloads the fonts and copies a prompt for your coding agent"
+      title={`Copies a prompt your coding agent can follow to install ${what}`}
     >
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
         {done ? (
@@ -69,7 +59,7 @@ export default function AgentButton({ prompt, file, className, notify }: Props) 
       </svg>
       <span className="swap">
         <span aria-hidden={done}>Give to your agent</span>
-        <span aria-hidden={!done}>Copied</span>
+        <span aria-hidden={!done}>Prompt copied</span>
       </span>
     </button>
   );

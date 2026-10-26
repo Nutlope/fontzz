@@ -449,40 +449,56 @@ export const AUTHORS: [string, string][] = [
 export const zipName = (f: Family) => `${f.name}.zip`;
 export const ALL_ZIP = "fontzz-all.zip";
 
-/** Prompt for one family. The button downloads the zip, so the agent works from a local file. */
-export function agentPrompt(f: Family): string {
-  return `I just downloaded the ${f.name} typeface from fontzz. It's ${zipName(f)} in my Downloads folder (if it isn't there, ask me where it is). Install it in this project and make it the main font.
+/** Where the agent fetches a family: the same variable WOFF2 that ships in the zip. */
+export const SITE_URL = "https://fontzz.vercel.app";
+export const fontUrl = (f: Family) => `${SITE_URL}/fonts/${f.key}.woff2`;
+const role = (f: Family) => (isMono(f) ? "mono" : isSerif(f) ? "serif" : "sans");
 
-1. Unzip it and copy ${f.name}/web/${f.name}[wght].woff2 into the folder this project serves static files from (for example public/fonts).
-2. Register it, pointing the url at the copied file:
+/** Install steps shared by both prompts, for a family file called `file`. */
+function steps(name: string, file: string, url: string, stack: string): string {
+  return `1. From the project root, download it into the folder the project serves static files from (public/ in Vite, Next.js and most setups):
+   curl -fL --create-dirs -o public/fonts/${file} ${url}
+   If static files live somewhere else, change this path and the urls below to match.
+2. Register it and make it the default font, in whichever way fits the project:
+   Plain CSS: add this to the global stylesheet, replacing the font-family already on body or html:
 
 @font-face {
-  font-family: "${f.name}";
-  src: url("/fonts/${f.name}[wght].woff2") format("woff2");
+  font-family: "${name}";
+  src: url("/fonts/${file}") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
+body { font-family: "${name}", ${stack}; }
 
-3. Use it everywhere: font-family: "${f.name}", ${fallback(f)}. If the project uses Tailwind or a theme file, set it as the default ${isMono(f) ? "mono" : isSerif(f) ? "serif" : "sans"} font there instead.
-4. Preload the file in the document head so text never flashes.
-
-${f.name} is a ${f.kind.toLowerCase()} variable font with every weight from 100 to 900, free under the SIL Open Font License 1.1.`;
+   Tailwind v3: keep the @font-face rule (no body rule needed) and in tailwind.config set
+   theme.extend.fontFamily.sans to ["${name}", ...defaultTheme.fontFamily.sans] (import defaultTheme from "tailwindcss/defaultTheme"), since extend replaces the default stack.
+   Tailwind v4: keep the @font-face rule and add @theme { --font-sans: "${name}", ${stack}; } to the main CSS file.
+   Next.js: skip the @font-face rule, load the file with next/font/local, and put its className on <html> in the root layout.
+3. Preload it in the document head so text never flashes (next/font does this for you; in JSX write crossOrigin):
+   <link rel="preload" href="/fonts/${file}" as="font" type="font/woff2" crossorigin>`;
 }
 
-/** Prompt for the whole collection: the agent asks which family to use. */
-export function agentPromptAll(): string {
-  const list = FAMILIES.map((f) => `- ${f.name} (${f.kind.toLowerCase()}): ${f.blurb}`).join("\n");
-  return `I just downloaded ${ALL_ZIP} from fontzz: ${COUNT_WORD} type families in my Downloads folder (if it isn't there, ask me where it is).
+/** Prompt for one family. The agent downloads the font itself, so the button only copies. */
+export function agentPrompt(f: Family): string {
+  return `Install the ${f.name} typeface from fontzz (${SITE_URL}) in this project and make it the main font. It's one variable font file with every weight from 100 to 900${f.key === "diode" ? "" : ", and its figures are tabular by default, so numbers line up in tables"}.
 
-First, look at this project and ask me which family I want, suggesting the two or three that fit it best:
+${steps(f.name, `${f.key}.woff2`, fontUrl(f), fallback(f))}
+
+${f.name} is a ${f.kind.toLowerCase()} family, free for personal and commercial use under the SIL Open Font License 1.1 (the license is embedded in the font file).`;
+}
+
+/** Prompt for the whole collection: the agent suggests a few, asks, then fetches only the pick. */
+export function agentPromptAll(): string {
+  const list = FAMILIES.map((f) => `- ${f.name}, ${f.kind.toLowerCase()} (${role(f)}): ${f.blurb}\n  ${fontUrl(f)}`).join("\n");
+  return `Help me pick a typeface from fontzz (${SITE_URL}), ${COUNT_WORD} free variable font families, then install it in this project.
+
+First look at this project, then suggest the two or three families below that fit it best, say why in one line each, and ask me which one I want. Don't install anything until I answer.
 
 ${list}
 
-Then install the one I pick (called NAME below):
-1. Unzip it and copy fontzz/NAME/web/NAME[wght].woff2 into the folder this project serves static files from (for example public/fonts).
-2. Register it with @font-face: font-family "NAME", src url("/fonts/NAME[wght].woff2") format("woff2"), font-weight 100 900, font-display swap.
-3. Use it everywhere with a fallback: system-ui, sans-serif for sans families, ui-serif, serif for serif families, ui-monospace, monospace for Signal and Tally. If the project uses Tailwind or a theme file, set it there instead.
-4. Preload the file in the document head.
+Then install only the one I pick. Below, NAME is its name, FILE is the last part of its URL (like halden.woff2) and STACK is its fallback: system-ui, sans-serif for sans, ui-serif, serif for serif, ui-monospace, monospace for mono.
 
-Every family is a variable font with weights from 100 to 900, free under the SIL Open Font License 1.1.`;
+${steps("NAME", "FILE", "URL", "STACK")}
+
+Every family is one variable font file with weights from 100 to 900, and all but Diode have tabular figures by default. They're free for personal and commercial use under the SIL Open Font License 1.1.`;
 }

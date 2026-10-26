@@ -83,7 +83,7 @@ export default function App() {
   const notify = useCallback((msg: string) => {
     setToast(msg);
     window.clearTimeout(toastTimer.current);
-    toastTimer.current = window.setTimeout(() => setToast(null), 1600);
+    toastTimer.current = window.setTimeout(() => setToast(null), 2600);
   }, []);
 
   const setWeight = useCallback((key: FamilyKey, w: number) => {

@@ -91,8 +91,8 @@ export default function Detail(p: Props) {
           </p>
         </div>
         <div className="actions">
-          <AgentButton className="ghost-btn" prompt={() => agentPrompt(f)} file={zipName(f)} notify={p.notify} />
-          <a className="solid-btn" href={`/downloads/${f.name}.zip`} download>
+          <AgentButton className="ghost-btn" prompt={() => agentPrompt(f)} what={f.name} notify={p.notify} />
+          <a className="solid-btn" href={`/downloads/${zipName(f)}`} download title={`${zipName(f)}: variable, nine static weights and WOFF2`}>
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
               <path d="M8 2.5v7.5M4.75 7 8 10.25 11.25 7M3 13h10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
