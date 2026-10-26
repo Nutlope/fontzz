@@ -383,9 +383,9 @@ a {
   flex: none;
   height: var(--head-h);
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr;
   align-items: center;
-  gap: 32px;
+  gap: 16px;
   padding: 0 var(--pad);
   border-bottom: 1px solid var(--line);
 }
@@ -407,13 +407,50 @@ a {
   transition: background-color 300ms var(--ease);
 }
 
-.tagline {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* info and theme sit beside the wordmark as one small dock, the same pill language as the GitHub link */
+.dock {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 2px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+}
+
+.dock-btn {
+  position: relative;
+  width: 32px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--ink-2);
+  transition: background-color 200ms var(--ease), color 200ms var(--ease);
+}
+
+.dock-btn:hover,
+.dock-btn.on {
+  background: var(--bg-2);
+  color: var(--ink);
+}
+
+.theme-btn::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--line-2);
+}
+
+/* the half moon turns over with the theme */
+.theme-btn svg {
+  transition: transform 640ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-btn svg.is-dark {
+  transform: rotate(180deg);
 }
 
 .header-actions {
@@ -495,8 +532,8 @@ a {
 
 .info-pop {
   position: absolute;
-  top: calc(100% + 10px);
-  right: -8px;
+  top: calc(100% + 12px);
+  left: -6px;
   width: 232px;
   padding: 14px 14px 12px;
   border-radius: 14px;
@@ -504,7 +541,7 @@ a {
   box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.35), var(--shadow);
   z-index: 20;
   animation: pop 160ms var(--ease) both;
-  transform-origin: top right;
+  transform-origin: top left;
 }
 
 @keyframes pop {
@@ -1829,18 +1866,9 @@ a {
   box-shadow: inset 1px 0 0 var(--line-2);
 }
 
-.gh-star svg {
-  fill: transparent;
-  stroke: currentColor;
-  transition: fill 200ms var(--ease), stroke 200ms var(--ease), transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* a fifth of a turn lands the star back on itself, so it settles cleanly */
-.gh:hover .gh-star svg,
-.gh:focus-visible .gh-star svg {
-  fill: var(--accent);
-  stroke: var(--accent);
-  transform: rotate(72deg);
+.gh:hover .gh-count,
+.gh:focus-visible .gh-count {
+  color: var(--accent);
 }
 
 .gh-count {
@@ -1849,6 +1877,7 @@ a {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   line-height: 1;
+  transition: color 200ms var(--ease);
 }
 
 .credit {
@@ -1894,9 +1923,6 @@ a {
 }
 
 @media (max-width: 1180px) {
-  .tagline {
-    display: none;
-  }
   .stage-meta span:not(:first-child),
   .stage-meta i {
     display: none;
@@ -2014,7 +2040,8 @@ a {
     display: none;
   }
   /* shortcuts mean nothing on touch, and the credit moves to the footer */
-  .info {
+  .info,
+  .theme-btn::before {
     display: none;
   }
   .gh {

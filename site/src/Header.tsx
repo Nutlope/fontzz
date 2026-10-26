@@ -5,18 +5,27 @@ import AgentButton from "./AgentButton";
 import GitHubStars from "./GitHubStars";
 import Credit from "./Credit";
 
-const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
-
 const KEYS: [string, string][] = [
   ["/", "Preview your text"],
   ["Arrows", "Move between families"],
   ["← →", "Weight, inside a family"],
   ["Esc", "Back"],
+  ["?", "This panel"],
 ];
 
 function Info({ family }: { family: Family }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement;
+      if (e.key !== "?" || t.isContentEditable || t.tagName === "INPUT" || t.tagName === "TEXTAREA") return;
+      e.preventDefault();
+      setOpen((o) => !o);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   useEffect(() => {
     if (!open) return;
     const close = (e: PointerEvent) => {
@@ -33,11 +42,11 @@ function Info({ family }: { family: Family }) {
   return (
     <div className="info" ref={ref}>
       <button
-        className={"icon-btn" + (open ? " on" : "")}
+        className={"dock-btn" + (open ? " on" : "")}
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label="About and shortcuts"
-        title="About and shortcuts"
+        title="About and shortcuts (?)"
       >
         <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
           <circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" strokeWidth="1.5" />
@@ -83,11 +92,21 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
         </span>
         <span className="wordmark-dot" style={{ background: "var(--accent-" + family.key + ")" }} />
       </button>
-      {home ? (
-        <p className="tagline">{cap(COUNT_WORD)} original type families. Every weight from 100 to 900. Free under the Open Font License.</p>
-      ) : (
-        <span />
-      )}
+      {/* site controls live with the brand; the right side is only for acting on fonts */}
+      <div className="dock" role="group" aria-label="Site">
+        <Info family={family} />
+        <button
+          className="dock-btn theme-btn"
+          onClick={onTheme}
+          aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+          title={theme === "dark" ? "Light theme" : "Dark theme"}
+        >
+          <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" className={theme === "dark" ? "is-dark" : ""}>
+            <circle cx="10" cy="10" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M10 3.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
       <div className="header-actions">
         <label className="tester">
           <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -110,18 +129,6 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
           )}
         </label>
         <GitHubStars family={family} />
-        <Info family={family} />
-        <button
-          className="icon-btn"
-          onClick={onTheme}
-          aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-          title={theme === "dark" ? "Light theme" : "Dark theme"}
-        >
-          <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
-            <circle cx="10" cy="10" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M10 3.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor" />
-          </svg>
-        </button>
         {home && (
           <div className="get">
             <AgentButton className="get-agent" prompt={agentPromptAll} what="the family that fits your project" notify={notify} />

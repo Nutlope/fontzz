@@ -57,13 +57,6 @@ export default function GitHubStars({ family }: { family: Family }) {
         />
       </svg>
       <span className="gh-star">
-        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
-          <path
-            d="M8 1.6l1.93 3.92 4.32.63-3.13 3.05.74 4.3L8 11.47 4.14 13.5l.74-4.3L1.75 6.15l4.32-.63L8 1.6Z"
-            strokeLinejoin="round"
-            strokeWidth="1.3"
-          />
-        </svg>
         <span className="gh-count" style={{ fontFamily: `"${family.name}"` }}>
           {stars === null ? "Star" : compact(stars)}
         </span>
