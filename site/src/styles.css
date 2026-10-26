@@ -797,6 +797,8 @@ a {
 
 .tile-arrow {
   grid-area: arrow;
+  justify-self: end; /* pinned right; the column also holds the live weight readout, whose width changes */
+  display: flex;
   color: var(--ink-2);
   opacity: 0;
   transform: translateX(-4px);
