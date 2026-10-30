@@ -21,11 +21,14 @@ const keyFromHash = (): FamilyKey | null => {
   return FAMILIES.some((f) => f.key === k) ? (k as FamilyKey) : null;
 };
 
-/** Columns and rows that give the biggest names for n tiles in a w x h wall. */
+/** Columns and rows that give the biggest names for n tiles in a w x h wall.
+    Only counts whose last row is full, or one short of full, are allowed, so no tile is ever left alone on a row. */
 function layout(n: number, w: number, h: number) {
   const aspect = 2.1; // names are wide words, so tiles want to be about twice as wide as tall
   let best = { cols: 1, rows: n, size: 0 };
   for (let cols = 1; cols <= n; cols++) {
+    const rem = n % cols;
+    if (rem !== 0 && (rem < cols - 1 || rem < 2)) continue;
     const rows = Math.ceil(n / cols);
     const size = Math.min(w / cols / aspect, h / rows);
     if (size > best.size) best = { cols, rows, size };

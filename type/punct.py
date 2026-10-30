@@ -133,7 +133,8 @@ def g_exclam(F):
 def g_exclamdown(F):
     g = g_exclam(F)
     g.name = "exclamdown"
-    g.apply(T_rot180(0, F.xh / 2 + (F.cap - F.xh) * 0.0 + (F.cap - F.cap) / 2))
+    # flip within the cap height, then drop so the dot sits at x-height and the stem hangs below the baseline
+    g.apply(T_rot180(0, F.cap / 2))
     g.apply(T_translate(0, -(F.cap - F.xh)))
     return g
 

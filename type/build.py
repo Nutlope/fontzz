@@ -190,8 +190,8 @@ def build_master(spec, mi):
     info.openTypeHheaAscender = 950
     info.openTypeHheaDescender = -250
     info.openTypeHheaLineGap = 0
-    info.openTypeOS2WinAscent = 1050
-    info.openTypeOS2WinDescent = 300
+    info.openTypeOS2WinAscent = 1060
+    info.openTypeOS2WinDescent = 400
     info.openTypeOS2Selection = [7]  # USE_TYPO_METRICS
     info.openTypeOS2WeightClass = MASTERS[mi][1]
     info.openTypeOS2VendorID = "FNZZ"

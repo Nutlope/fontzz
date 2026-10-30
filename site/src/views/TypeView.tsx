@@ -22,10 +22,11 @@ export default function TypeView({ family, weight, text, onText }: Props) {
     const b = box.current;
     const e = ed.current;
     if (!b || !e) return;
-    const W = b.clientWidth;
-    const H = b.clientHeight;
+    // fill most of the stage, not all of it, so the face reads as a specimen rather than a wall of letters
+    const W = e.clientWidth;
+    const H = b.clientHeight * 0.78;
     let lo = 16;
-    let hi = Math.min(420, H);
+    let hi = Math.min(260, H);
     for (let i = 0; i < 14; i++) {
       const mid = (lo + hi) / 2;
       e.style.fontSize = mid + "px";
@@ -53,7 +54,7 @@ export default function TypeView({ family, weight, text, onText }: Props) {
   useLayoutEffect(() => {
     const b = box.current;
     const e = ed.current;
-    if (b && e && (e.scrollHeight > b.clientHeight || e.scrollWidth > b.clientWidth + 1)) fit();
+    if (b && e && (e.scrollHeight > b.clientHeight || e.scrollWidth > e.clientWidth + 1)) fit();
     window.clearTimeout(settle.current);
     settle.current = window.setTimeout(fit, 180);
     return () => window.clearTimeout(settle.current);
