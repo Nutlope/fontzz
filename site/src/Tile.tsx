@@ -63,9 +63,10 @@ export default function Tile({ family: f, index, weight, preview, fit, intro, on
   }, []);
 
   // follow weight changes from the global control unless the pointer is scrubbing
+  // (a no-op on mount, where the target is already set and the entrance effect owns the first sweep)
   useEffect(() => {
     const a = anim.current;
-    if (a.hovering) return;
+    if (a.hovering || a.target === weight) return;
     a.target = weight;
     run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
