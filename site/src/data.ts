@@ -28,7 +28,13 @@ export type FamilyKey =
   | "quill"
   | "rewind"
   | "spire"
-  | "vector";
+  | "vector"
+  | "vellum"
+  | "lustre"
+  | "hearth"
+  | "cove"
+  | "fathom"
+  | "meridian";
 
 export type Group = "sans" | "serif" | "display" | "mono";
 
@@ -59,6 +65,12 @@ const GROUP_OF: Record<FamilyKey, Group> = {
   anvil: "serif",
   frontier: "serif",
   quill: "serif",
+  vellum: "serif",
+  lustre: "serif",
+  hearth: "serif",
+  cove: "sans",
+  fathom: "mono",
+  meridian: "serif",
   vesper: "display",
   topsy: "display",
   orbit: "display",
@@ -385,6 +397,66 @@ const LIST: Omit<Family, "group">[] = [
     accent: "#0F766E",
     accentDark: "#5EEAD4",
   },
+  {
+    key: "vellum",
+    name: "Vellum",
+    kind: "Old-style serif",
+    blurb: "Small x-height, low contrast and long bracketed serifs: a warm book face with pen-cut terminals, made for long reads.",
+    sample: "Old books had it right all along.",
+    headline: "Stories set to last",
+    accent: "#16554C",
+    accentDark: "#6FC4B6",
+  },
+  {
+    key: "lustre",
+    name: "Lustre",
+    kind: "Condensed didone",
+    blurb: "Tall, narrow and high-contrast: a fashion didone with hairline serifs and ball terminals for mastheads and posters.",
+    sample: "Elegance, narrowed down.",
+    headline: "The winter collection",
+    accent: "#5B2447",
+    accentDark: "#CF8BB0",
+  },
+  {
+    key: "hearth",
+    name: "Hearth",
+    kind: "Wide warm serif",
+    blurb: "Wide and sturdy with a big x-height and short bracketed serifs, a warm companion for editorial and brand work.",
+    sample: "Come sit by the fire.",
+    headline: "Slow mornings, good coffee",
+    accent: "#7A4A24",
+    accentDark: "#D8A878",
+  },
+  {
+    key: "cove",
+    name: "Cove",
+    kind: "Rounded geometric",
+    blurb: "Perfect circles and round-ended strokes with a single-storey a: a soft geometric that stays calm at any size.",
+    sample: "Round the corner, into the light.",
+    headline: "A softer way to get there",
+    accent: "#18A5A0",
+    accentDark: "#5FD8D2",
+  },
+  {
+    key: "fathom",
+    name: "Fathom",
+    kind: "Geometric monospace",
+    blurb: "A squared, geometric monospace with a single-storey a and square dots, steady for code, logs and terminals.",
+    sample: "let depth = measure();",
+    headline: "git push origin main",
+    accent: "#3F4D66",
+    accentDark: "#AAB8D4",
+  },
+  {
+    key: "meridian",
+    name: "Meridian",
+    kind: "Transitional serif",
+    blurb: "A steady transitional serif with an even color and a large x-height, at home in documents, dashboards and long reads.",
+    sample: "The work speaks for itself.",
+    headline: "Twelve years of steady work",
+    accent: "#18527A",
+    accentDark: "#7FB4D4",
+  },
 ];
 
 /** Every family, grouped sans, serif, display, mono (stable within a group). */
@@ -435,7 +507,7 @@ export function fallback(f: Family): string {
   return isSerif(f) ? "ui-serif, serif" : "system-ui, sans-serif";
 }
 
-const COUNT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine", "thirty"];
+const COUNT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine", "thirty", "thirty-one", "thirty-two", "thirty-three", "thirty-four", "thirty-five", "thirty-six"];
 export const COUNT = FAMILIES.length;
 export const COUNT_WORD = COUNT_WORDS[COUNT] ?? String(COUNT);
 

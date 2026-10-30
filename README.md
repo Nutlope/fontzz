@@ -4,7 +4,7 @@
 
 <h1 align="center">fontzz</h1>
 
-<p align="center">Thirty original type families drawn entirely in code, every weight from 100 to 900, free under the OFL, with a site to try them and hand them to your agent. <a href="https://fontzz.vercel.app">fontzz.vercel.app</a></p>
+<p align="center">Thirty-six original type families drawn entirely in code, every weight from 100 to 900, free under the OFL, with a site to try them and hand them to your agent. <a href="https://fontzz.vercel.app">fontzz.vercel.app</a></p>
 
 ## Tech stack
 
@@ -16,7 +16,7 @@
 
 ## Cloning & running
 
-1. Grab every family (6 MB, variable TTF, nine static TTFs and WOFF2 each): `curl -LO https://github.com/Luffixos/fontzz/raw/main/site/public/downloads/fontzz-all.zip`
+1. Grab every family (7 MB, variable TTF, nine static TTFs and WOFF2 each): `curl -LO https://github.com/Luffixos/fontzz/raw/main/site/public/downloads/fontzz-all.zip`
 2. Clone: `git clone https://github.com/Luffixos/fontzz.git && cd fontzz`
 3. Run the site: `npm --prefix site install && npm --prefix site run dev`, then open http://localhost:5178
 4. Set up the generator: `python3 -m venv .venv && .venv/bin/pip install -r type/requirements.txt`

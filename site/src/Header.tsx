@@ -137,7 +137,7 @@ export default function Header({ family, home, theme, onTheme, onHome, preview, 
               href={`/downloads/${ALL_ZIP}`}
               download
               aria-label={`Download all ${COUNT_WORD} families`}
-              title={`Download all ${COUNT_WORD} families (6 MB zip)`}
+              title={`Download all ${COUNT_WORD} families (7 MB zip)`}
             >
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
                 <path d="M8 2.5v7.5M4.75 7 8 10.25 11.25 7M3 13h10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

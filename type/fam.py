@@ -670,9 +670,147 @@ VECTOR = fam(
     dotw=(40, 92, 168), i_dot_y=(664, 644, 624), t_top=(684, 676, 668),
 )
 
+# ---------------------------------------------------------------- fourth set
+
+LUSTRE = fam(
+    name="Lustre",
+    style_note="Condensed didone",
+    xh=460, cap=700, asc=770, desc=-244, o=12, oc=14,
+    S=(20, 88, 186), T=(10, 22, 52), SU=(21, 88, 186), TU=(11, 22, 52),
+    k=0.56, ki=(0.6, 0.64, 0.72), kU=0.56, kiU=(0.6, 0.64, 0.72),
+    sh_k=0.58, sh_ki=(0.6, 0.64, 0.7),
+    serif="bracket", sf_br=(0, 0, 0), sf_t=(10, 18, 30), sf_e=(52, 66, 74),
+    sf_vt=(12, 22, 36), sf_vh=(46, 60, 60), sf_de=0.95, sf_midbeak=False,
+    x_w=(1.06, 1.12, 1.5), v_w=(1.06, 1.08, 1.16), K_lj=(0.42, 0.44, 0.5),
+    term="vertical", hook_term="vertical", arm_cut=90,
+    dot="round", ball=0.62, one_base=True, diag_c=0.3, N_s=0.42, M_s=0.48, dg=0.96, dgU=0.96,
+    n_c=(190, 176, 136), o_w=(1.02, 1.02, 1.0), sb=(30, 26, 18), sbU=(36, 30, 20),
+    H_c=(340, 318, 272), E_w=0.9, F_w=0.86, L_w=0.84, T_w=0.96,
+    c_th=(54, 52, 50), c_thb=(-48, -46, -40), e_th=(-40, -36, -30),
+    s_tth=(52, 52, 54), s_bth=(-130, -130, -128), C_th=(52, 50, 48), C_thb=(-46, -44, -38),
+    G_th=(44, 40, 34), S_tth=(52, 52, 54), S_bth=(-130, -130, -128),
+    a_th=(132, 130, 128), j_th=(214, 216, 218), g_th=(200, 200, 204), f_th=(56, 58, 60),
+    t_th=(-54, -54, -58), two_th=(144, 146, 150), three_tth=(144, 146, 150),
+    three_bth=(-144, -144, -140), five_bth=(-144, -144, -140), six_th=(56, 54, 60),
+    dotw=(40, 100, 196), i_dot_y=(580, 560, 546), t_top=(600, 590, 580),
+)
+
+HEARTH = fam(
+    name="Hearth",
+    style_note="Wide warm serif",
+    xh=520, cap=700, asc=752, desc=-212, o=10, oc=12,
+    S=(24, 88, 190), T=(22, 72, 150), SU=(25, 92, 196), TU=(23, 76, 156),
+    k=0.6, ki=(0.6, 0.62, 0.68), kU=0.6, kiU=(0.6, 0.62, 0.68),
+    sh_k=0.6, sh_ki=(0.62, 0.64, 0.7),
+    serif="bracket", sf_t=(16, 38, 64), sf_e=(52, 54, 48), sf_br=(30, 36, 30),
+    sf_vt=(20, 50, 84), sf_vh=(48, 56, 48), sf_de=0.9, sf_midbeak=False,
+    x_w=(1.06, 1.1, 1.3), v_w=(1.06, 1.08, 1.16), K_lj=(0.42, 0.44, 0.5),
+    term="vertical", hook_term="vertical", arm_cut=90, dot="round",
+    one_base=True, diag_c=0.7, N_s=0.62, M_s=0.66, dg=0.9, dgU=0.9,
+    n_c=(360, 336, 258), o_w=(1.06, 1.06, 1.03), sb=(56, 50, 38), sbU=(64, 56, 42),
+    H_c=(510, 482, 392), E_w=0.94, F_w=0.9, L_w=0.88, T_w=0.96,
+    c_th=(36, 38, 42), c_thb=(-36, -38, -42), e_th=(-34, -36, -40),
+    s_tth=(36, 36, 40), s_bth=(-144, -144, -140), C_th=(36, 38, 42), C_thb=(-36, -38, -42),
+    G_th=(36, 38, 42), S_tth=(36, 36, 40), S_bth=(-144, -144, -140),
+    a_th=(148, 150, 154), j_th=(210, 210, 214), g_th=(204, 204, 208), f_th=(36, 38, 42),
+    t_th=(-36, -38, -42), two_th=(148, 150, 154), three_tth=(148, 150, 154),
+    three_bth=(-144, -144, -140), five_bth=(-144, -144, -140), six_th=(40, 38, 44),
+    dotw=(46, 102, 190), i_dot_y=(660, 640, 620), t_top=(690, 680, 670), t_slant=0.7,
+)
+
+COVE = fam(
+    name="Cove",
+    style_note="Rounded geometric",
+    xh=540, cap=710, asc=762, desc=-212, o=10, oc=12,
+    S=(22, 86, 178), T=(21, 82, 164), SU=(22, 88, 186), TU=(21, 84, 170),
+    k=0.5523, ki=(0.5523, 0.56, 0.6), kU=0.5523, kiU=(0.5523, 0.56, 0.6),
+    junction="smooth", term="round", hook_term="round", dot="round",
+    a_story=1, sh_xt=0.5, sh_xti=0.5, sh_round=1.0, sh_k=0.5523, sh_ki=(0.5523, 0.56, 0.6),
+    sh_yr=(0.48, 0.48, 0.48), n_c=(330, 304, 236), o_circle=1.0, a1_w=1.0, b_w=1.0,
+    O_circle=1.0, H_c=(392, 372, 302), m_c=0.86,
+    c_th=(44, 44, 48), c_thb=(-44, -44, -48), e_th=(-38, -40, -44), r_w=(0.58, 0.58, 0.72),
+    r_drop=(60, 74, 88), r_xt=0.35, r_xti=0.42, s_w=(0.86, 0.86, 0.9),
+    C_w=(1.22, 1.22, 1.2), G_w=(1.24, 1.24, 1.2), D_w=(1.14, 1.14, 1.12), D_rx=1.7,
+    B_w=(0.88, 0.88, 0.92), B_rx=1.3, P_w=(0.86, 0.86, 0.9), P_rx=1.3,
+    R_w=(0.9, 0.9, 0.96), E_w=0.74, F_w=0.7, L_w=0.66, T_w=0.92, S_w=(0.84, 0.84, 0.9),
+    U_w=(1.0, 1.0, 1.02), U_ry=0.46, A_w=(1.2, 1.2, 1.22), V_w=(1.14, 1.14, 1.16), W_w=(0.9, 0.9, 0.94),
+    N_w=(1.06, 1.06, 1.06), M_w=(1.28, 1.28, 1.3), A_apex=0.12, V_apex=0.12, v_apex=0.12, M_apex=0.12,
+    dotw=(44, 104, 196), i_dot_y=(660, 640, 620), sb=(60, 54, 38), sbU=(74, 66, 50),
+)
+
+FATHOM = fam(
+    name="Fathom",
+    style_note="Geometric monospace",
+    mono=560, mono_sb=40,
+    xh=520, cap=700, asc=750, desc=-210, o=8, oc=9,
+    S=(22, 82, 152), T=(21, 78, 144), SU=(22, 86, 160), TU=(21, 80, 150),
+    k=0.78, ki=(0.8, 0.82, 0.86), kU=0.78, kiU=(0.8, 0.82, 0.86),
+    sh_k=0.78, sh_ki=(0.8, 0.82, 0.86), r_k=0.72, r_ki=0.74, jk=(0.64, 0.64, 0.64),
+    a_bt=(0.56, 0.57, 0.56), a_hy=(0.6, 0.61, 0.64), a_story=1,
+    hook_term="vertical", dot="square", G_spur=False,
+    n_c=(300, 282, 228), o_w=(1.04, 1.04, 1.02), sb=(34, 34, 34), sbU=(34, 34, 34),
+    H_c=(300, 282, 228), r_w=(0.9, 0.9, 1.1),
+    c_th=(30, 30, 34), c_thb=(-30, -30, -34), e_th=(-28, -30, -36),
+    dotw=(40, 92, 168), i_dot_y=(648, 628, 608), t_top=(680, 672, 664),
+)
+
+MERIDIAN = fam(
+    name="Meridian",
+    style_note="Transitional serif",
+    xh=500, cap=700, asc=750, desc=-218, o=11, oc=13,
+    # even, workhorse contrast: sturdier than a didone, livelier than a grotesque
+    S=(22, 86, 188), T=(14, 44, 104), SU=(24, 90, 194), TU=(15, 46, 108),
+    k=0.57, ki=(0.59, 0.61, 0.66), kU=0.57, kiU=(0.59, 0.61, 0.66),
+    sh_k=0.58, sh_ki=(0.6, 0.62, 0.68),
+    # sharp-but-bracketed serifs, flat terminals: neutral and legible
+    serif="bracket", sf_t=(12, 30, 54), sf_e=(46, 52, 50), sf_br=(30, 36, 32),
+    sf_vt=(16, 42, 74), sf_vh=(46, 54, 46), sf_de=0.95, sf_midbeak=False,
+    x_w=(1.06, 1.12, 1.5), v_w=(1.06, 1.08, 1.16), K_lj=(0.42, 0.44, 0.5),
+    term="vertical", hook_term="vertical", arm_cut=90,
+    dot="round", one_base=True, diag_c=0.5, N_s=0.5, M_s=0.56, dg=0.96, dgU=0.96,
+    n_c=(300, 280, 216), o_w=(1.04, 1.04, 1.02), sb=(40, 34, 24), sbU=(48, 40, 28),
+    H_c=(420, 398, 326), E_w=0.88, F_w=0.84, L_w=0.82, T_w=0.94,
+    c_th=(46, 46, 50), c_thb=(-46, -46, -48), e_th=(-44, -44, -46),
+    s_tth=(44, 44, 48), s_bth=(-136, -136, -132), C_th=(46, 46, 50), C_thb=(-46, -46, -48),
+    G_th=(46, 46, 50), S_tth=(44, 44, 48), S_bth=(-136, -136, -132),
+    a_th=(146, 148, 152), j_th=(206, 206, 210), g_th=(202, 202, 206), f_th=(46, 46, 50),
+    t_th=(-50, -50, -54), two_th=(146, 148, 152), three_tth=(146, 148, 152),
+    three_bth=(-146, -146, -142), five_bth=(-146, -146, -142), six_th=(52, 50, 56),
+    dotw=(42, 96, 184), i_dot_y=(618, 600, 584), t_top=(650, 640, 630),
+)
+
+VELLUM = fam(
+    name="Vellum",
+    style_note="Old-style serif",
+    xh=452, cap=700, asc=756, desc=-232, o=11, oc=13,
+    # old-style contrast: sturdy horizontals, no hairlines
+    S=(22, 86, 186), T=(26, 64, 124), SU=(24, 90, 192), TU=(27, 66, 128),
+    k=0.58, ki=(0.60, 0.62, 0.68), kU=0.58, kiU=(0.60, 0.62, 0.68),
+    sh_k=0.58, sh_ki=(0.60, 0.62, 0.68),
+    # long, fine, well-bracketed serifs
+    serif="bracket", sf_t=(12, 32, 58), sf_e=(62, 64, 60), sf_br=(34, 40, 34),
+    sf_vt=(18, 48, 84), sf_vh=(50, 60, 52), sf_de=0.95, sf_midbeak=False,
+    x_w=(1.06, 1.12, 1.5), v_w=(1.06, 1.08, 1.16), K_lj=(0.42, 0.44, 0.5),
+    # calligraphic, pen-angled terminals
+    term="angled", term_pen=68, term_mix=(0.45, 0.42, 0.2), hook_term="angled", arm_cut=68,
+    dot="round", one_base=True, diag_c=0.5, N_s=0.5, M_s=0.56, dg=0.96, dgU=0.96,
+    n_c=(290, 270, 210), o_w=(1.03, 1.03, 1.01), sb=(38, 32, 22), sbU=(46, 40, 28),
+    H_c=(400, 378, 308), E_w=0.86, F_w=0.82, L_w=0.80, T_w=0.94,
+    c_th=(50, 52, 56), c_thb=(-48, -48, -50), e_th=(-46, -46, -48),
+    s_tth=(46, 46, 48), s_bth=(-136, -136, -132), C_th=(50, 52, 54), C_thb=(-48, -48, -50),
+    G_th=(50, 52, 54), S_tth=(46, 46, 48), S_bth=(-136, -136, -132),
+    a_th=(146, 148, 152), j_th=(206, 206, 210), g_th=(202, 202, 206), f_th=(50, 50, 54),
+    t_th=(-52, -52, -56), t_top_style="slant", t_slant=0.8,
+    two_th=(146, 148, 152), three_tth=(146, 148, 152),
+    three_bth=(-148, -148, -144), five_bth=(-148, -148, -144), six_th=(52, 50, 56),
+    dotw=(42, 96, 184), i_dot_y=(600, 582, 566), t_top=(640, 630, 620),
+)
+
 FAMILIES = {"halden": HALDEN, "rondel": RONDEL, "tessera": TESSERA, "alder": ALDER, "mallow": MALLOW,
             "strata": STRATA, "plaza": PLAZA, "vesper": VESPER, "ledger": LEDGER, "folio": FOLIO,
             "opaline": OPALINE, "signal": SIGNAL, "tally": TALLY, "topsy": TOPSY, "tempo": TEMPO,
             "pebble": PEBBLE, "orbit": ORBIT, "cleft": CLEFT, "beacon": BEACON, "brioche": BRIOCHE,
             "diode": DIODE, "aurelia": AURELIA, "marquee": MARQUEE, "anvil": ANVIL, "gravure": GRAVURE,
-            "frontier": FRONTIER, "quill": QUILL, "rewind": REWIND, "spire": SPIRE, "vector": VECTOR}
+            "frontier": FRONTIER, "quill": QUILL, "rewind": REWIND, "spire": SPIRE, "vector": VECTOR,
+            "vellum": VELLUM, "lustre": LUSTRE, "hearth": HEARTH, "cove": COVE, "fathom": FATHOM,
+            "meridian": MERIDIAN}

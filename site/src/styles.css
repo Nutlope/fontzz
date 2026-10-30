@@ -179,6 +179,42 @@
   font-weight: 100 900;
   font-display: swap;
 }
+@font-face {
+  font-family: "Vellum";
+  src: url("/fonts/vellum.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lustre";
+  src: url("/fonts/lustre.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Hearth";
+  src: url("/fonts/hearth.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cove";
+  src: url("/fonts/cove.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fathom";
+  src: url("/fonts/fathom.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Meridian";
+  src: url("/fonts/meridian.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
 
 :root {
   --bg: #f3f2ee;
@@ -221,6 +257,12 @@
   --accent-rewind: #db2777;
   --accent-spire: #1d4ed8;
   --accent-vector: #0f766e;
+  --accent-vellum: #16554c;
+  --accent-lustre: #5b2447;
+  --accent-hearth: #7a4a24;
+  --accent-cove: #18a5a0;
+  --accent-fathom: #3f4d66;
+  --accent-meridian: #18527a;
   --ease: cubic-bezier(0.22, 0.8, 0.18, 1);
   --pad: clamp(16px, 2.8vw, 44px);
   --head-h: 64px;
@@ -269,6 +311,12 @@
   --accent-rewind: #f472b6;
   --accent-spire: #93c5fd;
   --accent-vector: #5eead4;
+  --accent-vellum: #6fc4b6;
+  --accent-lustre: #cf8bb0;
+  --accent-hearth: #d8a878;
+  --accent-cove: #5fd8d2;
+  --accent-fathom: #aab8d4;
+  --accent-meridian: #7fb4d4;
   color-scheme: dark;
 }
 
@@ -314,6 +362,12 @@
   --accent-rewind: #f472b6;
   --accent-spire: #93c5fd;
   --accent-vector: #5eead4;
+  --accent-vellum: #6fc4b6;
+  --accent-lustre: #cf8bb0;
+  --accent-hearth: #d8a878;
+  --accent-cove: #5fd8d2;
+  --accent-fathom: #aab8d4;
+  --accent-meridian: #7fb4d4;
     color-scheme: dark;
   }
 }
