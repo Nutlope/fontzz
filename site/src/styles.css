@@ -264,7 +264,7 @@
   --accent-fathom: #3f4d66;
   --accent-meridian: #18527a;
   --ease: cubic-bezier(0.22, 0.8, 0.18, 1);
-  --pad: clamp(16px, 2.8vw, 44px);
+  --pad: clamp(12px, 1.4vw, 20px);
   --head-h: 64px;
   --slim: 54px;
   color-scheme: light;
@@ -852,7 +852,7 @@ a {
     "idx . arrow"
     "name name name"
     "kind kind read";
-  padding: clamp(10px, 1.1vw, 16px) clamp(12px, 1.4vw, 20px);
+  padding: clamp(10px, 1.1vw, 16px) var(--pad);
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   cursor: pointer;

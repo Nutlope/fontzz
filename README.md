@@ -10,14 +10,14 @@
 
 - Python generator in `type/`: every glyph is parametric, three masters (Thin, Regular, Black) per family, no font editor involved
 - fontmake builds the variable font, fontTools and skia-pathops cut the nine static weights, kerning comes from glyph side profiles
-- 285 characters per family (Latin-1, Latin Extended-A subset, figures, currency, arrows), WOFF2 at 9 to 37 KB
+- 285 characters per family (Latin-1, Latin Extended-A subset, figures, currency, arrows), WOFF2 at 9 to 36 KB
 - Every TTF and WOFF2 passes OTS, the sanitizer Chrome and Firefox run on web fonts
 - `site/`: Vite 5, React 18, TypeScript and plain CSS, no UI library, about 62 KB of gzipped JS
 
 ## Cloning & running
 
-1. Grab every family (7 MB, variable TTF, nine static TTFs and WOFF2 each): `curl -LO https://github.com/Luffixos/fontzz/raw/main/site/public/downloads/fontzz-all.zip`
-2. Clone: `git clone https://github.com/Luffixos/fontzz.git && cd fontzz`
+1. Grab every family (7 MB, variable TTF, nine static TTFs and WOFF2 each): `curl -LO https://github.com/Nutlope/fontzz/raw/main/site/public/downloads/fontzz-all.zip`
+2. Clone: `git clone https://github.com/Nutlope/fontzz.git && cd fontzz`
 3. Run the site: `npm --prefix site install && npm --prefix site run dev`, then open http://localhost:5178
 4. Set up the generator: `python3 -m venv .venv && .venv/bin/pip install -r type/requirements.txt`
 5. Rebuild every family into `site/public`: `cd type && ../.venv/bin/python release.py`
